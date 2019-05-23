@@ -81,8 +81,8 @@ class Meta {
 
     const stats = {
       depCount: deps.length,
-      fileCount: Math.max(0, this.fileCount),
-      unpackedSize: Math.max(0, this.unpackedSize),
+      fileCount: Math.max(0, this.fileCount || 0),
+      unpackedSize: Math.max(0, this.unpackedSize || 0),
     };
 
     deps.forEach((dep) => {
