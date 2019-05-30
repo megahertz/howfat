@@ -8,18 +8,15 @@ module.exports = download;
 /**
  * @param {IDownloadItem[]} items
  * @param {ITransformer} transformer
+ * @param {Partial<IDownloaderOptions<object>>} [options]
  */
-function download(items, transformer) {
-  /**
-   * @type {IDownloaderOptions<object>}}
-   */
-  const options = {
+function download(items, transformer, options = {}) {
+  const downloader = new Downloader({
     httpClient: httpClientFactory(),
     items,
     transformer,
     initialResults: null,
-  };
-
-  const downloader = new Downloader(options);
+    ...options,
+  });
   return downloader.start();
 }

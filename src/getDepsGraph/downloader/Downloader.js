@@ -83,6 +83,10 @@ class Downloader extends EventEmitter {
       return this.threads[0];
     }
 
+    if (this.options.debug) {
+      console.debug('GET', item.url);
+    }
+
     const downloadPromise = this.options.httpClient(item.url);
     this.threads.push(downloadPromise);
 

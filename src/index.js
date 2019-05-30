@@ -11,7 +11,7 @@ main(process.argv[2]).catch((error) => {
 });
 
 async function main(pkg) {
-  const meta = await getDepsGraph(pkg);
+  const meta = await getDepsGraph(pkg, null, { debug: true });
   const reporter = createReporter();
   reporter.print(meta);
   process.exit();

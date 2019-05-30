@@ -2,10 +2,11 @@ import Downloader = require('./Downloader');
 
 export interface IDownloaderOptions<T = any[]> {
   asyncLimit?: number;
-  stopOnError?: boolean;
+  debug?: boolean;
+  httpClient: IHttpClient;
   initialResults?: T;
   items: IDownloadItem[];
-  httpClient: IHttpClient;
+  stopOnError?: boolean;
   transformer?: ITransformer<T>;
 }
 

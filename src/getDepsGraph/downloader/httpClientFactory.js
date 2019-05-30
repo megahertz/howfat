@@ -20,7 +20,6 @@ function httpClientFactory({ timeout = 10000 } = {}) {
     const http = uri.startsWith('https') ? httpsReq : httpReq;
 
     const fetchPromise = new Promise((resolve, reject) => {
-      console.log('get', uri);
       const request = http.get(uri, (res) => {
         const { statusCode } = res;
         const chunks = [];

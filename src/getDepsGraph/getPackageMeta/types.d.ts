@@ -9,6 +9,7 @@ export interface IMetaData {
 }
 
 export interface IMetaOptions extends IOptions {
+  debug?: boolean;
   getPackageMeta?: typeof getPackageMeta;
 }
 

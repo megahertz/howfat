@@ -16,7 +16,7 @@ module.exports = {
  */
 async function getDepsGraph(name, version, options) {
   const item = getPackageMeta(name, version, options);
-  return download([item], transformer);
+  return download([item], transformer, { debug: options.debug });
 }
 
 /**
