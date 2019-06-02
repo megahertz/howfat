@@ -1,7 +1,8 @@
 export interface IOptions {
+  debug?: boolean;
+  fetchDevDependencies?: boolean;
+  fetchOptionalDependencies?: boolean;
+  fetchPeerDependencies?: boolean;
   registryUrl?: string;
   reporter?: string;
-  fetchDevDependencies?: boolean;
-  fetchPeerDependencies?: boolean;
-  fetchOptionalDependencies?: boolean;
 }

@@ -3,23 +3,34 @@
 const httpReq  = require('http');
 const httpsReq = require('http');
 
-module.exports = httpClientFactory;
+module.exports = downloaderFactory;
 
 /**
- * Create an IHttpClient with options
+ * @callback IDownloader
+ * @param {string} url
+ * @return Promise<string>
+ */
+
+/**
+ * Create an IDownloader with options
  * @param {object} options
  * @param {number} [options.timeout]
- * @return {IHttpClient}
+ * @param {boolean} [options.debug]
+ * @return {IDownloader}
  */
-function httpClientFactory({ timeout = 10000 } = {}) {
+function downloaderFactory({ timeout = 10000, debug } = {}) {
   /**
    * @param {string} uri
-   * @return {Promise<Buffer>}
+   * @return {Promise<string>}
    */
-  return function httpClient(uri) {
+  return function downloader(uri) {
     const http = uri.startsWith('https') ? httpsReq : httpReq;
 
     const fetchPromise = new Promise((resolve, reject) => {
+      if (debug) {
+        console.debug('get', uri);
+      }
+
       const request = http.get(uri, (res) => {
         const { statusCode } = res;
         const chunks = [];
@@ -33,8 +44,7 @@ function httpClientFactory({ timeout = 10000 } = {}) {
         if (statusCode === 301 || statusCode === 302) {
           const location = res.headers['content-type'];
           if (location) {
-            // noinspection JSCheckFunctionSignatures
-            resolve(httpClient(location));
+            resolve(downloader(location));
           } else {
             reject(new Error(`Bad response of ${uri}: ${statusCode}`));
           }
@@ -44,16 +54,15 @@ function httpClientFactory({ timeout = 10000 } = {}) {
         }
 
         res.on('data', chunk => chunks.push(chunk));
-        res.on('end', () => resolve(Buffer.concat(chunks)));
+        res.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')));
       });
 
       request.on('error', reject);
     });
 
-    // noinspection JSUnresolvedFunction
     return Promise.race([
       fetchPromise,
-      new Promise((_, reject) => setTimeout(reject, timeout))
+      new Promise((_, reject) => setTimeout(reject, timeout)),
     ]);
   };
 }

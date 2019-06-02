@@ -1,5 +1,7 @@
 'use strict';
 
+const { formatSize } = require('./utils');
+
 class Default {
   /**
    * @param {IOptions} options
@@ -9,12 +11,12 @@ class Default {
   }
 
   /**
-   * @param {Meta} meta
+   * @param {BasicPackage} pkg
    */
-  print(meta) {
-    const stats = meta.getStats();
+  print(pkg) {
+    const stats = pkg.getStats();
     console.log('Dependencies: ', stats.depCount);
-    console.log('Size: ', stats.unpackedSize);
+    console.log('Size: ', formatSize(stats.unpackedSize));
     console.log('Files: ', stats.fileCount);
   }
 }

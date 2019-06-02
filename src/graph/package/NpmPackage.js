@@ -1,39 +1,48 @@
 'use strict';
 
-const semver = require('semver');
-const Meta   = require('./Meta');
+const semver       = require('semver');
+const BasicPackage = require('./BasicPackage');
 
 /**
  * Metadata for npm-hosted package
  * Some ideas from npm-remote-ls
  */
-class NpmMeta extends Meta {
+class NpmPackage extends BasicPackage {
   get url() {
     const registryUrl = this.options.registryUrl || 'http://registry.npmjs.org';
     return registryUrl + '/' + this.npaResult.escapedName;
   }
 
-  addPackageInformation(packageJson) {
+  /**
+   * @param {*} packageJson
+   * @param {IPackageFactory} packageFactory
+   */
+  addPackageInformation(packageJson, packageFactory) {
     const version = this.getVersion(packageJson);
+
     this.dependencies = this.transformDependencies(
-      packageJson.versions[version].dependencies
+      packageJson.versions[version].dependencies,
+      packageFactory
     );
 
     if (this.options.fetchDevDependencies && !this.parent) {
       this.devDependencies = this.transformDependencies(
-        packageJson.versions[version].devDependencies
+        packageJson.versions[version].devDependencies,
+        packageFactory
       );
     }
 
     if (this.options.fetchPeerDependencies) {
       this.peerDependencies = this.transformDependencies(
-        packageJson.versions[version].peerDependencies
+        packageJson.versions[version].peerDependencies,
+        packageFactory
       );
     }
 
     if (this.options.fetchOptionalDependencies) {
       this.optionalDependencies = this.transformDependencies(
-        packageJson.versions[version].optionalDependencies
+        packageJson.versions[version].optionalDependencies,
+        packageFactory
       );
     }
 
@@ -43,7 +52,7 @@ class NpmMeta extends Meta {
       this.unpackedSize = dist.unpackedSize;
     }
 
-    this.exactName = packageJson.name + '@' + version;
+    this.version = version;
   }
 
   /**
@@ -81,4 +90,4 @@ class NpmMeta extends Meta {
   }
 }
 
-module.exports = NpmMeta;
+module.exports = NpmPackage;

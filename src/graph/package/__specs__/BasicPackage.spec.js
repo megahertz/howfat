@@ -2,9 +2,9 @@
 
 const { describe, expect, it } = require('humile');
 
-const getPackageMeta = require('..');
+const packageFactory = require('../index');
 
-describe('Meta', () => {
+describe('BasicPackage', () => {
   it('should calculate stats recursively', () => {
     const { meta, a, b } = createMeta();
 
@@ -35,9 +35,9 @@ describe('Meta', () => {
 });
 
 function createMeta() {
-  const meta = getPackageMeta('test');
-  const a = getPackageMeta('a');
-  const b = getPackageMeta('b');
+  const meta = packageFactory('test');
+  const a = packageFactory('a');
+  const b = packageFactory('b');
 
   meta.dependencies = { a };
   meta.dependencies.a.dependencies = { b };
