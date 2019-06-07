@@ -1,6 +1,6 @@
 'use strict';
 
-class DependenciesGraphBuilder {
+class DependencyGraphBuilder {
   /**
    * @param {IOptions} options
    * @param {IDownloader} downloader
@@ -65,4 +65,4 @@ class DependenciesGraphBuilder {
   }
 }
 
-module.exports = DependenciesGraphBuilder;
+module.exports = DependencyGraphBuilder;

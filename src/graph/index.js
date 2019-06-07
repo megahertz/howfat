@@ -1,12 +1,12 @@
 'use strict';
 
-const DependenciesGraphBuilder = require('./DependenciesGraphBuilder');
-const DependencyCache          = require('./DependencyCache');
-const downloaderFactory        = require('./downloaderFactory');
-const packageFactory           = require('./package');
+const DependencyGraphBuilder = require('./DependencyGraphBuilder');
+const DependencyCache        = require('./DependencyCache');
+const downloaderFactory      = require('./downloaderFactory');
+const packageFactory         = require('./package');
 
 module.exports = {
-  buildDependenciesGraphByName,
+  buildDependencyGraphByName,
 };
 
 /**
@@ -15,8 +15,8 @@ module.exports = {
  * @param {IOptions} [options]
  * @return {Promise<BasicPackage>}
  */
-function buildDependenciesGraphByName(name, version = '', options = {}) {
-  const builder = new DependenciesGraphBuilder(
+function buildDependencyGraphByName(name, version = '', options = {}) {
+  const builder = new DependencyGraphBuilder(
     options,
     downloaderFactory({ debug: options.debug }),
     packageFactory,

@@ -2,7 +2,7 @@
 
 'use strict';
 
-const { buildDependenciesGraphByName } = require('./graph');
+const { buildDependencyGraphByName } = require('./graph');
 const createReporter                   = require('./reporters');
 
 main(process.argv[2]).catch((error) => {
@@ -11,7 +11,7 @@ main(process.argv[2]).catch((error) => {
 });
 
 async function main(pkg) {
-  const meta = await buildDependenciesGraphByName(pkg, '', { debug: true });
+  const meta = await buildDependencyGraphByName(pkg, '', { debug: true });
   const reporter = createReporter();
   reporter.print(meta);
   process.exit();
