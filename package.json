@@ -14,7 +14,7 @@
   "repository": "megahertz/howfat",
   "files": [
     "src/*",
-    "!src/**/*.spec.js"
+    "!__specs__"
   ],
   "keywords": [
     "npm",
