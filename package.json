@@ -31,13 +31,13 @@
   },
   "devDependencies": {
     "@types/npm-package-arg": "^6.1.0",
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.17.2",
-    "humile": "^0.2.2"
+    "eslint": "^6.0.1",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-plugin-import": "^2.18.0",
+    "humile": "^0.2.3"
   },
   "dependencies": {
     "npm-package-arg": "^6.1.0",
-    "semver": "^6.1.0"
+    "semver": "^6.2.0"
   }
 }
