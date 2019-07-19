@@ -4,16 +4,16 @@ const npa          = require('npm-package-arg');
 const BasicPackage = require('./BasicPackage');
 const NpmPackage   = require('./NpmPackage');
 
-module.exports = packageFactory;
+module.exports = makePackage;
 
 /**
- * Creates a Package instance using name and version
+ * Makes a Package instance using name and version
  * @param {string} name
  * @param {string} [version]
  * @param {IOptions} [options]
  * @return {BasicPackage}
  */
-function packageFactory(name, version, options = {}) {
+function makePackage(name, version, options = {}) {
   const npaResult = version ? npa.resolve(name, version) : npa(name);
 
   if (npaResult.registry) {

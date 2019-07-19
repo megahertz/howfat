@@ -33,6 +33,9 @@ class BasicPackage {
     this.unpackedSize = -1;
 
     /** @type {string} */
+    this.tarballUrl = undefined;
+
+    /** @type {string} */
     this.version = undefined;
 
     /**

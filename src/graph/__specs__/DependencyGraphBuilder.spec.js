@@ -29,12 +29,17 @@ function createBuilder(packageName, options = {}) {
 
   return new DependencyGraphBuilder(
     options,
-    fixtureDownloader,
+    getPkgMetaMock,
+    getPkgStatMock,
     packageFactory,
     new DependencyCache()
   );
 
-  function fixtureDownloader(url) {
+  /**
+   * @param {string} url
+   * @return {Promise<object>}
+   */
+  function getPkgMetaMock(url) {
     const fixturePath = path.resolve(
       __dirname,
       'fixtures',
@@ -42,6 +47,17 @@ function createBuilder(packageName, options = {}) {
       getFixtureName(path.basename(url)) + '.json'
     );
 
-    return fs.promises.readFile(fixturePath, 'utf8');
+    return fs.promises.readFile(fixturePath, 'utf8').then(JSON.parse);
+  }
+
+  /**
+   * @param {string} url
+   * @return {Promise<IPackageStat>}
+   */
+  function getPkgStatMock(url) {
+    return Promise.resolve({
+      fileCount: 0,
+      unpackedSize: 0,
+    });
   }
 }

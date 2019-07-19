@@ -1,18 +1,26 @@
 'use strict';
 
-class DependencyGraphBuilder {
+const { EventEmitter } = require('events');
+
+class DependencyGraphBuilder extends EventEmitter {
   /**
    * @param {IOptions} options
-   * @param {IDownloader} downloader
+   * @param {IGetPkgMeta} getPkgMeta
+   * @param {IGetPkgStat} getPkgStat
    * @param {IPackageFactory} packageFactory
    * @param {DependencyCache} cache
    */
-  constructor(options, downloader, packageFactory, cache) {
+  constructor(options, getPkgMeta, getPkgStat, packageFactory, cache) {
+    super();
+
     /** @type {IOptions} */
     this.options = options;
 
-    /** @type {IDownloader} */
-    this.downloader = downloader;
+    /** @type {IGetPkgMeta} */
+    this.getPkgMeta = getPkgMeta;
+
+    /** @type {IGetPkgStat} */
+    this.getPkgStat = getPkgStat;
 
     /** @type {IPackageFactory} */
     this.packageFactory = packageFactory;
@@ -44,9 +52,17 @@ class DependencyGraphBuilder {
    * @private
    */
   async fillPackageInformation(pkg) {
-    const json = JSON.parse(await this.downloader(pkg.url));
+    this.emit('fetch-meta', pkg.url, pkg);
+    const meta = await this.getPkgMeta(pkg.url);
 
-    pkg.addPackageInformation(json, this.packageFactory);
+    pkg.addPackageInformation(meta, this.packageFactory);
+
+    if (pkg.fileCount < 1 && pkg.tarballUrl) {
+      this.emit('fetch-stat', pkg.tarballUrl, pkg);
+      const stat = await this.getPkgStat(pkg.tarballUrl);
+      pkg.fileCount = stat.fileCount;
+      pkg.unpackedSize = stat.unpackedSize;
+    }
 
     this.cache.add(pkg);
 

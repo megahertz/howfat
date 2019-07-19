@@ -1,7 +1,7 @@
 'use strict';
 
 const httpReq  = require('http');
-const httpsReq = require('http');
+const httpsReq = require('https');
 
 module.exports = downloaderFactory;
 
@@ -28,7 +28,7 @@ function downloaderFactory({ timeout = 10000, debug } = {}) {
 
     const fetchPromise = new Promise((resolve, reject) => {
       if (debug) {
-        console.debug('get', uri);
+        console.debug('tarball.js.js', uri);
       }
 
       const request = http.get(uri, (res) => {

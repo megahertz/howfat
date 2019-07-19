@@ -30,6 +30,7 @@
     "node": ">=6"
   },
   "devDependencies": {
+    "@types/node": "^12.6.8",
     "@types/npm-package-arg": "^6.1.0",
     "eslint": "^6.0.1",
     "eslint-config-airbnb-base": "^13.2.0",
@@ -38,6 +39,7 @@
   },
   "dependencies": {
     "npm-package-arg": "^6.1.0",
-    "semver": "^6.2.0"
+    "semver": "^6.2.0",
+    "tar": "^4.4.10"
   }
 }

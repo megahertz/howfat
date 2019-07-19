@@ -48,8 +48,9 @@ class NpmPackage extends BasicPackage {
 
     const dist = packageJson.versions[version].dist;
     if (dist) {
-      this.fileCount = dist.fileCount;
-      this.unpackedSize = dist.unpackedSize;
+      this.fileCount = dist.fileCount || 0;
+      this.unpackedSize = dist.unpackedSize || 0;
+      this.tarballUrl = dist.tarball;
     }
 
     this.version = version;

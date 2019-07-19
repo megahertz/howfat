@@ -1,6 +1,6 @@
 'use strict';
 
-const { formatSize } = require('./utils');
+const { formatSize } = require('./helpers');
 
 class Default {
   /**
@@ -15,9 +15,9 @@ class Default {
    */
   print(pkg) {
     const stats = pkg.getStats();
-    console.log('Dependencies: ', stats.depCount);
-    console.log('Size: ', formatSize(stats.unpackedSize));
-    console.log('Files: ', stats.fileCount);
+    console.log('Dependencies:', stats.depCount);
+    console.log('Size:', formatSize(stats.unpackedSize));
+    console.log('Files:', stats.fileCount);
   }
 }
 
