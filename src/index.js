@@ -34,8 +34,11 @@ async function main() {
   let rootDependency;
   if (config.projectPath) {
     rootDependency = dependencyFactory.createProject(config.projectPath);
-  } else {
+  } else if (config.fetchedPackages.length > 0) {
     rootDependency = dependencyFactory.createGroup(config.fetchedPackages);
+  } else {
+    console.error(config.helpText);
+    process.exit(1);
   }
 
   const resolver = createDependencyResolver(

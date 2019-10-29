@@ -105,7 +105,9 @@ function createHttpStream(uri, options = {}) {
 
   request
     .on('error', error)
-    .on('timeout', error);
+    .on('timeout', () => {
+      error(new Error(`Timeout error when requesting ${uri}`));
+    });
 
   return stream;
 

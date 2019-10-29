@@ -13,16 +13,15 @@ function getConfig() {
   options.help(`
     Usage: howfat [package1] [packageN] [OPTIONS]
     Options:
-      --connection-limit NUMBER
-      --timeout NUMBER         
-      --retry-count NUMBER
+      -d, --dev-dependencies BOOLEAN   Fetch dev dependencies, default false
+      -p, --peer-dependencies BOOLEAN  Fetch peer dependencies, default false
       
-      -d, --dev-dependencies BOOLEAN
-      -p, --peer-dependencies BOOLEAN
+      -r, --reporter STRING            'default', 'tree'
+      -v, --verbose BOOLEAN            Show additional logs
       
-      -r, --reporter STRING
-      
-      -v, --verbose BOOLEAN
+      --connection-limit NUMBER        Max simultaneous connections, default 10
+      --timeout NUMBER                 Request timeout in ms, default 10000
+      --retry-count NUMBER             Try to fetch again of failure, default 5
   `);
 
   return new Config(options);
@@ -46,7 +45,8 @@ class Config {
     this.isVerbose = opts.verbose;
 
     this.fetchedPackages = opts._;
+    this.projectPath = opts._.length < 1 ? opts.getProjectPath() : undefined;
 
-    this.projectPath = opts._.length < 1 ? opts.getProjectPath() : null;
+    this.helpText = opts.getHelpText();
   }
 }

@@ -131,7 +131,7 @@ class HttpClient extends EventEmitter {
    * @private
    */
   runTask(task) {
-    if (task.retries > this.retryCount) {
+    if (task.retries >= this.retryCount) {
       task.setRejected();
       this.finishTask(task);
       return;
@@ -151,7 +151,5 @@ class HttpClient extends EventEmitter {
       });
   }
 }
-
-
 
 module.exports = HttpClient;
