@@ -2,22 +2,25 @@
 
 const { formatSize } = require('./helpers');
 
+/**
+ * @implements Reporter
+ */
 class Default {
   /**
-   * @param {IOptions} options
+   * @param {ReporterOptions} options
    */
   constructor(options) {
-    this.options = options;
+    this.printer = options.printer;
   }
 
   /**
-   * @param {BasicPackage} pkg
+   * @param {Dependency} dependency
    */
-  print(pkg) {
-    const stats = pkg.getStats();
-    console.log('Dependencies:', stats.depCount);
-    console.log('Size:', formatSize(stats.unpackedSize));
-    console.log('Files:', stats.fileCount);
+  print(dependency) {
+    const stats = dependency.getStatsRecursive();
+    this.printer('Dependencies:', stats.dependencyCount);
+    this.printer('Size:', formatSize(stats.unpackedSize));
+    this.printer('Files:', stats.fileCount);
   }
 }
 

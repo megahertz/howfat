@@ -1,11 +1,12 @@
 {
   "name": "howfat",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Shows how fat is a package",
   "bin": "src/index.js",
   "main": "src/index.js",
   "scripts": {
-    "test": "humile && npm run lint",
+    "test": "humile",
+    "test:full": "npm run humile && npm run lint",
     "lint": "eslint src/**/*.js",
     "postversion": "git push && git push --tags",
     "prepack": "npm run test"
@@ -18,6 +19,7 @@
   ],
   "keywords": [
     "npm",
+    "package",
     "size",
     "dependencies",
     "fat"
@@ -35,11 +37,12 @@
     "eslint": "^6.0.1",
     "eslint-config-airbnb-base": "^13.2.0",
     "eslint-plugin-import": "^2.18.0",
-    "humile": "^0.2.3"
+    "humile": "^0.2.4"
   },
   "dependencies": {
     "npm-package-arg": "^6.1.0",
-    "semver": "^6.2.0",
-    "tar": "^4.4.10"
+    "package-options": "0.0.1",
+    "semver": "^5.7.1",
+    "tar": "^5.0.5"
   }
 }

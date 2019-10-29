@@ -2,8 +2,8 @@
 
 const { describe, expect, it } = require('humile');
 
-const fs      = require('fs');
-const path    = require('path');
+const fs = require('fs');
+const path = require('path');
 const tarball = require('../tarball');
 
 describe('tarball', () => {

@@ -1,18 +1,22 @@
 'use strict';
 
 const Default = require('./Default');
+const Tree = require('./Tree');
 
-module.exports = createReporter;
+module.exports = {
+  createReporter,
+};
 
 /**
- *
- * @param {IOptions} options
- * @return {Default}
+ * @param {string} name
+ * @param {ReporterOptions} options
+ * @return {Reporter}
  */
-function createReporter(options = {}) {
-  const name = options && options.reporter;
+function createReporter(name, options = {}) {
+  options = { printer: console.log, ...options };
 
   switch (name) {
+    case 'tree': return new Tree(options);
     default: return new Default(options);
   }
 }

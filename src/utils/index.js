@@ -1,29 +1,36 @@
 'use strict';
 
-const { get }             = require('./http');
+const { getConfig } = require('./config');
+const { get } = require('./http/http');
+const HttpClient = require('./http/HttpClient');
+const { createProgressIndicator } = require('./http/progress');
 const { statsFromStream } = require('./tarball');
 
 module.exports = {
-  makeGetPkgMeta,
-  makeGetPkgStat,
+  createHttpClient,
+  createProgressIndicator,
+  getConfig,
+  getTarballStats,
 };
 
 /**
- * @param {number} timeout
- * @return {IGetPkgMeta}
+ * @param {object} [options]
+ * @param {number} [options.connectionLimit]
+ * @param {number} [options.timeout]
+ * @param {number} [options.retryCount]
+ * @return {HttpClient}
  */
-function makeGetPkgMeta({ timeout = 5000 } = {}) {
-  return (url) => {
-    return get(url, { timeout }).asJson();
-  };
+function createHttpClient(options = {}) {
+  return new HttpClient(get, options);
 }
 
 /**
- * @param {number} timeout
- * @return {IGetPkgStat}
+ * @param {string} url
+ * @param {HttpClient} httpClient
+ * @return {Promise<TarballStat>}
  */
-function makeGetPkgStat({ timeout = 5000 } = {}) {
-  return (url) => {
-    return statsFromStream(get(url, { timeout }).stream);
-  };
+function getTarballStats(url, httpClient) {
+  return httpClient.getUsingTransformer(url, (response) => {
+    return statsFromStream(response.stream);
+  });
 }
