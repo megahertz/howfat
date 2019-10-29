@@ -1,0 +1,412 @@
+{
+  "_id": "lighter-run",
+  "_rev": "4-d4d204a04ddb97b213ad4c8430bb97c4",
+  "name": "lighter-run",
+  "description": "A process runner with refresh capabilities.",
+  "dist-tags": {
+    "latest": "1.2.1"
+  },
+  "versions": {
+    "1.0.0": {
+      "name": "lighter-run",
+      "version": "1.0.0",
+      "description": "A process runner with refresh capabilities.",
+      "dependencies": {
+        "lighter-config": ">=1.1.0 <2",
+        "fsevents": ">=1.0.14 <2"
+      },
+      "optionalDependencies": {
+        "fsevents": ">=1.0.14 <2"
+      },
+      "devDependencies": {
+        "exam": ">=1.4.5 <2"
+      },
+      "keywords": [
+        "lighter",
+        "app",
+        "application",
+        "run",
+        "runner",
+        "spawn",
+        "watch",
+        "watcher",
+        "reload",
+        "refresh",
+        "utility",
+        "fast",
+        "lightweight"
+      ],
+      "bin": {
+        "lighter-run": "run.js"
+      },
+      "main": "run.js",
+      "engines": {
+        "node": ">=0.8.28"
+      },
+      "scripts": {
+        "test": "./node_modules/exam/exam.js",
+        "cover": "./node_modules/exam/exam-cover.js",
+        "report": "open coverage/lcov-report/index.html",
+        "coveralls": "./node_modules/exam/exam-coveralls.js",
+        "bench": "./node_modules/exam/exam.js test/bench"
+      },
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/lighterio/lighter-run.git"
+      },
+      "bugs": {
+        "url": "https://github.com/lighterio/lighter-run/issues"
+      },
+      "homepage": "https://github.com/lighterio/lighter-run",
+      "author": {
+        "name": "Sam Eubank",
+        "email": "sameubank@gmail.com"
+      },
+      "contributors": [
+        {
+          "name": "Sam Eubank",
+          "email": "sameubank@gmail.com"
+        }
+      ],
+      "license": "ISC",
+      "gitHead": "67f00f6d0058566019b81d5ff00ce23269169cac",
+      "_id": "lighter-run@1.0.0",
+      "_shasum": "c6f3493be6a7d316c29ccc73b9398f112c0f05fc",
+      "_from": ".",
+      "_npmVersion": "3.3.8",
+      "_nodeVersion": "4.1.1",
+      "_npmUser": {
+        "name": "zerious",
+        "email": "sameubank@gmail.com"
+      },
+      "maintainers": [
+        {
+          "name": "zerious",
+          "email": "sameubank@gmail.com"
+        }
+      ],
+      "dist": {
+        "shasum": "c6f3493be6a7d316c29ccc73b9398f112c0f05fc",
+        "tarball": "https://registry.npmjs.org/lighter-run/-/lighter-run-1.0.0.tgz"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-12-west.internal.npmjs.com",
+        "tmp": "tmp/lighter-run-1.0.0.tgz_1477452758857_0.29853357444517314"
+      },
+      "directories": {}
+    },
+    "1.1.0": {
+      "name": "lighter-run",
+      "version": "1.1.0",
+      "description": "A process runner with refresh capabilities.",
+      "dependencies": {
+        "lighter-config": ">=1.1.0 <2",
+        "fsevents": ">=1.0.14 <2"
+      },
+      "optionalDependencies": {
+        "fsevents": ">=1.0.14 <2"
+      },
+      "devDependencies": {
+        "exam": ">=1.4.5 <2"
+      },
+      "keywords": [
+        "lighter",
+        "app",
+        "application",
+        "run",
+        "runner",
+        "spawn",
+        "watch",
+        "watcher",
+        "reload",
+        "refresh",
+        "utility",
+        "fast",
+        "lightweight"
+      ],
+      "bin": {
+        "lighter-run": "run.js"
+      },
+      "main": "run.js",
+      "engines": {
+        "node": ">=0.8.28"
+      },
+      "scripts": {
+        "test": "./node_modules/exam/exam.js",
+        "cover": "./node_modules/exam/exam-cover.js",
+        "report": "open coverage/lcov-report/index.html",
+        "coveralls": "./node_modules/exam/exam-coveralls.js",
+        "bench": "./node_modules/exam/exam.js test/bench"
+      },
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/lighterio/lighter-run.git"
+      },
+      "bugs": {
+        "url": "https://github.com/lighterio/lighter-run/issues"
+      },
+      "homepage": "https://github.com/lighterio/lighter-run",
+      "author": {
+        "name": "Sam Eubank",
+        "email": "sameubank@gmail.com"
+      },
+      "contributors": [
+        {
+          "name": "Sam Eubank",
+          "email": "sameubank@gmail.com"
+        }
+      ],
+      "license": "ISC",
+      "gitHead": "5c1f5f8a61675cd477ba0847a9475c2530d13b8f",
+      "_id": "lighter-run@1.1.0",
+      "_shasum": "f86ccccc90cf031e17390f409f3d7e578f1eb116",
+      "_from": ".",
+      "_npmVersion": "3.10.10",
+      "_nodeVersion": "6.9.4",
+      "_npmUser": {
+        "name": "zerious",
+        "email": "sameubank@gmail.com"
+      },
+      "maintainers": [
+        {
+          "name": "zerious",
+          "email": "sameubank@gmail.com"
+        }
+      ],
+      "dist": {
+        "shasum": "f86ccccc90cf031e17390f409f3d7e578f1eb116",
+        "tarball": "https://registry.npmjs.org/lighter-run/-/lighter-run-1.1.0.tgz"
+      },
+      "_npmOperationalInternal": {
+        "host": "packages-18-east.internal.npmjs.com",
+        "tmp": "tmp/lighter-run-1.1.0.tgz_1483687509747_0.35493733710609376"
+      },
+      "directories": {}
+    },
+    "1.2.0": {
+      "name": "lighter-run",
+      "version": "1.2.0",
+      "description": "A process runner with refresh capabilities.",
+      "dependencies": {
+        "lighter-config": ">=1.1.0 <2",
+        "fsevents": ">=1.0.14 <2"
+      },
+      "optionalDependencies": {
+        "fsevents": ">=1.0.14 <2"
+      },
+      "devDependencies": {
+        "exam": "^1.4.5"
+      },
+      "keywords": [
+        "lighter",
+        "app",
+        "application",
+        "run",
+        "runner",
+        "spawn",
+        "watch",
+        "watcher",
+        "reload",
+        "refresh",
+        "utility",
+        "fast",
+        "lightweight"
+      ],
+      "bin": {
+        "lighter-run": "run.js"
+      },
+      "main": "run.js",
+      "engines": {
+        "node": ">=0.8.28"
+      },
+      "scripts": {
+        "test": "./node_modules/exam/exam.js",
+        "cover": "./node_modules/exam/exam-cover.js",
+        "report": "open coverage/lcov-report/index.html",
+        "bench": "./node_modules/exam/exam.js test/bench"
+      },
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/lighterio/lighter-run.git"
+      },
+      "bugs": {
+        "url": "https://github.com/lighterio/lighter-run/issues"
+      },
+      "homepage": "https://github.com/lighterio/lighter-run",
+      "author": {
+        "name": "Sam Eubank",
+        "email": "sameubank@gmail.com"
+      },
+      "contributors": [
+        {
+          "name": "Sam Eubank",
+          "email": "sameubank@gmail.com"
+        }
+      ],
+      "license": "MIT",
+      "gitHead": "13c63d5b70d241de17c80eb33cf23925e1ad13ff",
+      "_id": "lighter-run@1.2.0",
+      "_shasum": "36f0a86eb2637a0b5f68aabbf5d73655f21619d6",
+      "_from": ".",
+      "_npmVersion": "3.10.10",
+      "_nodeVersion": "6.9.5",
+      "_npmUser": {
+        "name": "zerious",
+        "email": "sameubank@gmail.com"
+      },
+      "dist": {
+        "shasum": "36f0a86eb2637a0b5f68aabbf5d73655f21619d6",
+        "tarball": "https://registry.npmjs.org/lighter-run/-/lighter-run-1.2.0.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "zerious",
+          "email": "sameubank@gmail.com"
+        }
+      ],
+      "_npmOperationalInternal": {
+        "host": "packages-12-west.internal.npmjs.com",
+        "tmp": "tmp/lighter-run-1.2.0.tgz_1488860646356_0.44512079237028956"
+      },
+      "directories": {}
+    },
+    "1.2.1": {
+      "name": "lighter-run",
+      "version": "1.2.1",
+      "description": "A process runner with refresh capabilities.",
+      "dependencies": {
+        "lighter-config": ">=1.1.0 <2",
+        "fsevents": ">=1.0.14 <2"
+      },
+      "optionalDependencies": {
+        "fsevents": ">=1.0.14 <2"
+      },
+      "devDependencies": {
+        "exam": "^1.4.5"
+      },
+      "keywords": [
+        "lighter",
+        "app",
+        "application",
+        "run",
+        "runner",
+        "spawn",
+        "watch",
+        "watcher",
+        "reload",
+        "refresh",
+        "utility",
+        "fast",
+        "lightweight"
+      ],
+      "bin": {
+        "lighter-run": "run.js"
+      },
+      "main": "run.js",
+      "engines": {
+        "node": ">=0.8.28"
+      },
+      "scripts": {
+        "test": "./node_modules/exam/exam.js",
+        "cover": "./node_modules/exam/exam-cover.js",
+        "report": "open coverage/lcov-report/index.html",
+        "bench": "./node_modules/exam/exam.js test/bench"
+      },
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/lighterio/lighter-run.git"
+      },
+      "bugs": {
+        "url": "https://github.com/lighterio/lighter-run/issues"
+      },
+      "homepage": "https://github.com/lighterio/lighter-run",
+      "author": {
+        "name": "Sam Eubank",
+        "email": "sameubank@gmail.com"
+      },
+      "contributors": [
+        {
+          "name": "Sam Eubank",
+          "email": "sameubank@gmail.com"
+        }
+      ],
+      "license": "MIT",
+      "gitHead": "db9226ccb839dbdb0be24afd4fd0c0e2357bfb4a",
+      "_id": "lighter-run@1.2.1",
+      "_shasum": "ba1cb5cbb264c9411fbc0f4fc122962a30a50767",
+      "_from": ".",
+      "_npmVersion": "3.10.10",
+      "_nodeVersion": "6.9.5",
+      "_npmUser": {
+        "name": "zerious",
+        "email": "sameubank@gmail.com"
+      },
+      "dist": {
+        "shasum": "ba1cb5cbb264c9411fbc0f4fc122962a30a50767",
+        "tarball": "https://registry.npmjs.org/lighter-run/-/lighter-run-1.2.1.tgz"
+      },
+      "maintainers": [
+        {
+          "name": "zerious",
+          "email": "sameubank@gmail.com"
+        }
+      ],
+      "_npmOperationalInternal": {
+        "host": "s3://npm-registry-packages",
+        "tmp": "tmp/lighter-run-1.2.1.tgz_1495859291627_0.2789006168022752"
+      },
+      "directories": {}
+    }
+  },
+  "readme": "# lighter-run\n[![Chat](https://badges.gitter.im/chat.svg)](//gitter.im/lighterio/public)\n[![Version](https://img.shields.io/npm/v/lighter-run.svg)](//www.npmjs.com/package/lighter-run)\n[![Downloads](https://img.shields.io/npm/dm/lighter-run.svg)](//www.npmjs.com/package/lighter-run)\n[![Build](https://img.shields.io/travis/lighterio/lighter-run.svg)](//travis-ci.org/lighterio/lighter-run)\n[![Coverage](https://img.shields.io/codecov/c/github/lighterio/lighter-run/master.svg)](//codecov.io/gh/lighterio/lighter-run)\n[![Style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](//www.npmjs.com/package/standard)\n\nWith `lighter-run`, you can run the node application that's in your current\ndirectory, and it will restart when files change.\n\n## Quick Start\n1. Install globally (using sudo if necessary).\n```bash\nnpm install --global lighter-run\n```\n2. Ensure that the `\"main\"` property in your `package.json` points to your\napplication's entry point file.\n\n3. Run!\n```bash\nlighter-run\n```\n\n## Passing Arguments\n\nTo pass arguments to your entry point, just list them after a double-dash:\n\n```bash\nlighter-run -- ARG1 ARG2 ARG3\n```\n\n## Running Other Files\n\nIf you'd like to run a file other than the one that's specified as `\"main\"` in\nyour `package.json`, then you can specify it as an argument to `lighter-run`:\n\n```bash\nlighter-run index\n```\n\n**NOTE:** You can omit the \".js\" extension just as you would with the `node`\nexecutable.\n\n\n## Configuration\n`lighter-run` uses `lighter-config` for its configuration. Just create a\n`\"config/base.json\"` file in your project, and add some options under a\nproperty called `\"lighterRun\"`. The following is an example of a configuration\nwhich uses the default values:\n```json\n{\n  \"lighterRun\": {\n    \"minRestartDelay\": 500,\n    \"maxRestartDelay\": 5000,\n    \"restartDelayBackoff\": 2,\n    \"cleanTime\": 2000,\n    \"ignore\": [\n      \".DS_Store\",\n      \".cache\",\n      \".git\",\n      \".idea\",\n      \".project\",\n      \"coverage\",\n      \"data\",\n      \"log\"\n    ],\n    \"live\": [\n      \"public\",\n      \"scripts\",\n      \"styles\",\n      \"views\"\n    ],\n    \"watchDirs\": null\n  }\n}\n```\n\n**minRestartDelay**<br>\nAmount of time to wait before trying to restart (the first time).\n\n**maxRestartDelay**<br>\nMaximum amount of time to wait before trying to restart, after failing many times.\n\n**restartDelayBackoff**<br>\nMultiplier to be applied to the restart delay time after each failure.\n\n**cleanTime**<br>\nLength of time that a process must be running before it's considered to have started cleanly.\n\n**ignore**<br>\nFile patterns in which changes should be ignored.\n\n**live**<br>\nFile patterns that can be live-reloaded instead of restarting the process.\n\n**watchDirs**<br>\nAbsolute paths for directories that should be watched. (Defaults to the current\nworking directory).\n\n\n## More on lighter-run...\n* [Contributing](//github.com/lighterio/lighter-run/blob/master/CONTRIBUTING.md)\n* [License (ISC)](//github.com/lighterio/lighter-run/blob/master/LICENSE.md)\n* [Change Log](//github.com/lighterio/lighter-run/blob/master/CHANGELOG.md)\n* [Roadmap](//github.com/lighterio/lighter-run/blob/master/ROADMAP.md)\n",
+  "maintainers": [
+    {
+      "name": "zerious",
+      "email": "sameubank@gmail.com"
+    }
+  ],
+  "time": {
+    "modified": "2017-05-27T04:28:11.757Z",
+    "created": "2016-10-26T03:32:39.100Z",
+    "1.0.0": "2016-10-26T03:32:39.100Z",
+    "1.1.0": "2017-01-06T07:25:11.777Z",
+    "1.2.0": "2017-03-07T04:24:06.740Z",
+    "1.2.1": "2017-05-27T04:28:11.757Z"
+  },
+  "homepage": "https://github.com/lighterio/lighter-run",
+  "keywords": [
+    "lighter",
+    "app",
+    "application",
+    "run",
+    "runner",
+    "spawn",
+    "watch",
+    "watcher",
+    "reload",
+    "refresh",
+    "utility",
+    "fast",
+    "lightweight"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lighterio/lighter-run.git"
+  },
+  "contributors": [
+    {
+      "name": "Sam Eubank",
+      "email": "sameubank@gmail.com"
+    }
+  ],
+  "author": {
+    "name": "Sam Eubank",
+    "email": "sameubank@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/lighterio/lighter-run/issues"
+  },
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "_attachments": {}
+}
