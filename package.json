@@ -8,7 +8,7 @@
     "test": "humile",
     "test:full": "npm run test && npm run lint",
     "lint": "eslint src/**/*.js",
-    "postversion": "git push && git push --tags",
+    "postversion": "npm run test:full && git push && git push --tags",
     "prepack": "npm run test:full"
   },
   "typings": "src/index.d.ts",
