@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "npm-package-arg": "^6.1.0",
-    "package-options": "0.0.4",
+    "package-options": "0.0.5",
     "semver": "^5.7.1",
     "tar": "^5.0.5"
   }
