@@ -4,6 +4,8 @@
 
 Shows how fat is a package together with its dependencies
 
+![howfat](docs/screenshot.png)
+
 ## Why should I cate about my package size?
 
 - Small package is installed much faster on CI
