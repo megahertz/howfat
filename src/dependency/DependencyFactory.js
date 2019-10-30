@@ -13,10 +13,16 @@ class DependencyFactory {
    * @param {string} name
    * @param {string} versionSpec
    * @param {DependencyType} type
+   * @param {string} localPath
    * @return {RealDependency}
    */
-  create(name, versionSpec = undefined, type = 'normal') {
-    const dependencySpec = parseSpec(name, versionSpec);
+  create(
+    name,
+    versionSpec = undefined,
+    type = 'normal',
+    localPath = undefined
+  ) {
+    const dependencySpec = parseSpec(name, versionSpec, localPath);
     return new RealDependency(dependencySpec, type);
   }
 
@@ -58,15 +64,17 @@ class DependencyFactory {
   }
 
   /**
-   * @param {DependencySpecs} specs
+   * @param {Package} pkg
+   * @param {DependencyTypeFilter} typeFilter
    * @return {RealDependency[]}
    */
-  createDependenciesFromSpec(specs) {
+  createDependenciesOfPackage(pkg, typeFilter = {}) {
     const result = [];
+    const specs = pkg.getDependencies(typeFilter);
 
     for (const type of Dependency.TYPES) {
       for (const [name, versionSpec] of Object.entries(specs[type])) {
-        result.push(this.create(name, versionSpec, type));
+        result.push(this.create(name, versionSpec, type, pkg.localPath));
       }
     }
 

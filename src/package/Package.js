@@ -10,10 +10,13 @@ class Package {
     /**
      * @type {?string}
      */
-    this.version = null;
+    this.version = undefined;
     this.versionSpec = versionSpec;
 
-    this.localPath = null;
+    /**
+     * @type {?string}
+     */
+    this.localPath = undefined;
 
     this.dependencies = {
       dev: {},
@@ -28,8 +31,8 @@ class Package {
     };
 
     this.requirements = {
-      arch: null,
-      platform: null,
+      arch: undefined,
+      platform: undefined,
     };
   }
 

@@ -74,12 +74,18 @@ function isValueMatchList(value, list) {
 
 /**
  *
- * @param name
- * @param versionSpec
+ * @param {string} name
+ * @param {string} versionSpec
+ * @param {string} localPath
  * @return {DependencySpec}
  */
-function parseSpec(name, versionSpec = undefined) {
-  const meta = versionSpec ? npa.resolve(name, versionSpec) : npa(name);
+function parseSpec(name, versionSpec = undefined, localPath = undefined) {
+  let meta;
+  if (versionSpec) {
+    meta = npa.resolve(name, versionSpec, localPath);
+  } else {
+    meta = npa(name, localPath);
+  }
 
   let source = 'npm';
   if (meta.type === 'directory') {
@@ -87,9 +93,9 @@ function parseSpec(name, versionSpec = undefined) {
   }
 
   return {
-    name: meta.name,
-    versionSpec: meta.fetchSpec,
     escapedName: meta.escapedName,
+    name: meta.name,
     source,
+    versionSpec: meta.fetchSpec,
   };
 }

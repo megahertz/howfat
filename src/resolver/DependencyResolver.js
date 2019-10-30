@@ -62,11 +62,12 @@ class DependencyResolver {
       return unmet;
     }
 
-    const children = this.dependencyFactory.createDependenciesFromSpec(
-      pkg.getDependencies({
+    const children = this.dependencyFactory.createDependenciesOfPackage(
+      pkg,
+      {
         dev: this.typeFilter.dev && dependency.canIncludeDevDependencies(),
         peer: this.typeFilter.peer === true,
-      })
+      }
     );
     dependency.loadChildren(children);
 

@@ -173,6 +173,10 @@ class FixtureGraph {
    * @return {Dependency}
    */
   getFixtureRoot() {
-    return this.root.children[0];
+    if (this.getRoot().isReal()) {
+      return this.getRoot();
+    }
+
+    return this.getRoot().children[0];
   }
 }

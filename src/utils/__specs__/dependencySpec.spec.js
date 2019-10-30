@@ -60,29 +60,29 @@ describe('utils/dependencySpec', () => {
 
   describe('parseSpec', () => {
     it('should parse local deps with absolute path', () => {
-      expect(dependencySpec.parseSpec('test', '/packages/local')).toEqual({
+      expect(dependencySpec.parseSpec('test', '/packages', '/root')).toEqual({
         escapedName: 'test',
         name: 'test',
         source: 'directory',
-        versionSpec: '/packages/local',
+        versionSpec: '/packages',
       });
     });
 
     it('should parse local deps with relative path', () => {
-      expect(dependencySpec.parseSpec('test', '..')).toEqual({
+      expect(dependencySpec.parseSpec('test', '..', '/root')).toEqual({
         escapedName: 'test',
         name: 'test',
         source: 'directory',
-        versionSpec: jasmine.anything(),
+        versionSpec: '/',
       });
     });
 
     it('should parse local deps with relative path and file prefix', () => {
-      expect(dependencySpec.parseSpec('test', 'file:..')).toEqual({
+      expect(dependencySpec.parseSpec('test', 'file:..', '/root/1')).toEqual({
         escapedName: 'test',
         name: 'test',
         source: 'directory',
-        versionSpec: jasmine.anything(),
+        versionSpec: '/root',
       });
     });
 
