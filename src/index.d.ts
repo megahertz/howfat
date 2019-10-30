@@ -15,10 +15,6 @@ export type DependencySpec = {
   source: 'npm' | 'directory' | 'github' | 'http';
 }
 
-export type DependencySpecs = {
-  [P in DependencyType]?: { [name: string]: string };
-}
-
 export type GetTarballStats = (
   url: string,
   httpClient: HttpClient,

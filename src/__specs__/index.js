@@ -88,8 +88,10 @@ async function loadFixture(packageName) {
  * @return {Promise<FixtureGraph>}
  */
 async function loadFixtureWithoutCache(packageName) {
-  const httpClient = new HttpClientMock();
-  const resolver = createDependencyResolver(httpClient, {}, dependencyFactory);
+  const resolver = createDependencyResolver(
+    createPackageFactory(new HttpClientMock()),
+    dependencyFactory
+  );
 
   const root = dependencyFactory.createGroup([packageName]);
   return new FixtureGraph(await resolver.resolve(root));
@@ -101,8 +103,10 @@ async function loadFixtureWithoutCache(packageName) {
  * @return {Promise<FixtureGraph>}
  */
 async function loadProject(projectName) {
-  const httpClient = new HttpClientMock();
-  const resolver = createDependencyResolver(httpClient, {}, dependencyFactory);
+  const resolver = createDependencyResolver(
+    createPackageFactory(new HttpClientMock()),
+    dependencyFactory
+  );
 
   const root = dependencyFactory.createProject(
     path.resolve(__dirname, 'projects', projectName)

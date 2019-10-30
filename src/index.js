@@ -2,11 +2,15 @@
 
 'use strict';
 
-const { createProgressIndicator } = require('./utils');
 const { createDependencyFactory } = require('./dependency');
-const { createDependencyResolver } = require('./resolver');
+const { createPackageFactory } = require('./package');
 const { createReporter } = require('./reporters');
-const { createHttpClient, getConfig } = require('./utils');
+const { createDependencyResolver } = require('./resolver');
+const {
+  createHttpClient,
+  createProgressIndicator,
+  getConfig,
+} = require('./utils');
 
 const config = getConfig();
 
@@ -42,9 +46,9 @@ async function main() {
   }
 
   const resolver = createDependencyResolver(
-    httpClient,
-    config.dependencyTypeFilter,
-    dependencyFactory
+    createPackageFactory(httpClient),
+    dependencyFactory,
+    config.dependencyTypeFilter
   );
   rootDependency = await resolver.resolve(rootDependency);
   progressIndicator.finish();

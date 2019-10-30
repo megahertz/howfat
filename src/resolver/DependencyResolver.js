@@ -5,23 +5,15 @@ const graph = require('../dependency/graph');
 
 class DependencyResolver {
   /**
-   * @param {HttpClient} httpClient
-   * @param {DependencyTypeFilter} typeFilter
-   * @param {DependencyFactory} dependencyFactory
    * @param {PackageFactory} packageFactory
+   * @param {DependencyFactory} dependencyFactory
+   * @param {DependencyTypeFilter} typeFilter
    * @param {DependencyCache} cache
    */
-  constructor(
-    httpClient,
-    typeFilter,
-    dependencyFactory,
-    packageFactory,
-    cache
-  ) {
-    this.httpClient = httpClient;
-    this.typeFilter = typeFilter;
-    this.dependencyFactory = dependencyFactory;
+  constructor(packageFactory, dependencyFactory, typeFilter, cache) {
     this.packageFactory = packageFactory;
+    this.dependencyFactory = dependencyFactory;
+    this.typeFilter = typeFilter;
     this.cache = cache;
 
     this.fetchDependency = this.fetchDependency.bind(this);
@@ -37,12 +29,10 @@ class DependencyResolver {
 
   /**
    * @param {(Dependency | RealDependency)} dependency
-   * @param {number} index
-   * @param {Dependency} parent
    * @return {Promise<Dependency>}
    * @private
    */
-  async fetchDependency(dependency, index, parent) {
+  async fetchDependency(dependency) {
     if (!dependency.isReal()) {
       return dependency;
     }
@@ -53,7 +43,6 @@ class DependencyResolver {
     }
 
     const pkg = await this.packageFactory.create(dependency.spec);
-
     dependency.setPackage(pkg);
 
     if (!isRightPlatform(pkg.requirements)) {
@@ -66,7 +55,7 @@ class DependencyResolver {
       pkg,
       {
         dev: this.typeFilter.dev && dependency.canIncludeDevDependencies(),
-        peer: this.typeFilter.peer === true,
+        peer: this.typeFilter.peer,
       }
     );
     dependency.loadChildren(children);

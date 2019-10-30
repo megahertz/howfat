@@ -2,7 +2,6 @@
 
 const DependencyCache = require('./DependencyCache');
 const DependencyResolver = require('./DependencyResolver');
-const { createPackageFactory } = require('../package');
 const { createDependencyFactory } = require('../dependency');
 
 
@@ -11,23 +10,20 @@ module.exports = {
 };
 
 /**
- * @param {HttpClient} httpClient
- * @param {DependencyTypeFilter} typeFilter
- * @param {DependencyFactory} dependencyFactory
  * @param {PackageFactory} packageFactory
+ * @param {DependencyFactory} dependencyFactory
+ * @param {DependencyTypeFilter} typeFilter
  * @return {DependencyResolver}
  */
 function createDependencyResolver(
-  httpClient,
-  typeFilter = {},
+  packageFactory,
   dependencyFactory = createDependencyFactory(),
-  packageFactory = createPackageFactory(httpClient)
+  typeFilter = {}
 ) {
   return new DependencyResolver(
-    httpClient,
-    typeFilter,
-    dependencyFactory,
     packageFactory,
+    dependencyFactory,
+    typeFilter,
     new DependencyCache()
   );
 }
