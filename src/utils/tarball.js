@@ -2,10 +2,6 @@
 
 const tar = require('tar');
 
-module.exports = {
-  statsFromStream,
-};
-
 class TarballStat {
   constructor() {
     this.fileCount = 0;
@@ -13,6 +9,11 @@ class TarballStat {
     this.packageJson = {};
   }
 }
+
+module.exports = {
+  statsFromStream,
+  TarballStat,
+};
 
 /**
  * Read gzipped tar package stream and return its stats
@@ -29,7 +30,7 @@ function statsFromStream(stream) {
       stat.fileCount += 1;
       stat.unpackedSize += entry.size;
 
-      if (entry.path === 'package/package.json') {
+      if (entry.path.match(/^[^/]+\/package.json$/)) {
         const chunks = [];
         entry.on('data', chunk => chunks.push(chunk));
         entry.on('error', reject);

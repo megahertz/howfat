@@ -1,5 +1,6 @@
 import Dependency = require('./dependency/Dependency');
 import HttpClient = require('./utils/http/HttpClient');
+import { TarballStat } from './utils/tarball';
 
 export type DependencyType = 'dev' | 'normal' | 'optional' | 'peer';
 
@@ -11,7 +12,7 @@ export type DependencySpec = {
   name: string;
   versionSpec: string;
   escapedName: string;
-  source: 'npm' | 'directory' | string;
+  source: 'npm' | 'directory' | 'github' | 'http';
 }
 
 export type DependencySpecs = {
@@ -21,7 +22,7 @@ export type DependencySpecs = {
 export type GetTarballStats = (
   url: string,
   httpClient: HttpClient,
-) => Promise<Stats>;
+) => Promise<TarballStat>;
 
 export type HttpProgressEvent = {
   finishedCount: number;

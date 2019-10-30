@@ -12,33 +12,41 @@ class DirectoryFetcher extends Fetcher {
    * @return {Promise<Package>}
    */
   async fetch(pkg, { versionSpec }) {
-    /** @type {string} */
-    const packagePath = versionSpec;
+    await this.updatePackageFromDirectory(pkg, versionSpec);
+    return pkg;
+  }
 
+  /**
+   *
+   * @param {Package} pkg
+   * @param {string} dirPath
+   * @return {Promise<void>}
+   * @protected
+   */
+  async updatePackageFromDirectory(pkg, dirPath) {
     const content = await fs.promises.readFile(
-      path.join(packagePath, 'package.json'),
+      path.join(dirPath, 'package.json'),
       'utf8'
     );
+
     const packageJson = JSON.parse(content);
 
     if (!pkg.name) {
       pkg.name = packageJson.name;
     }
 
-    pkg.localPath = packagePath;
+    pkg.localPath = dirPath;
     pkg.version = packageJson.version;
     pkg.dependencies = this.extractDependencies(packageJson);
-    pkg.stats = await this.getDirStats(packagePath);
+    pkg.stats = await this.getDirStats(dirPath);
     pkg.requirements = this.extractRequirements(packageJson);
-
-    return pkg;
   }
 
   /**
-   *
    * @param {string} directory
    * @param {object} initial
    * @return {Promise<{ unpackedSize: number, fileCount: number }>}
+   * @private
    */
   async getDirStats(directory, initial = { fileCount: 0, unpackedSize: 0 }) {
     const files = await fs.promises.readdir(directory);

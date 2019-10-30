@@ -1,6 +1,9 @@
 'use strict';
 
 const DirectoryFetcher = require('./fetchers/DirectoryFetcher');
+const GitFetcher = require('./fetchers/GitFetcher');
+const GithubFetcher = require('./fetchers/GithubFetcher');
+const HttpFetcher = require('./fetchers/HttpFetcher');
 const NpmFetcher = require('./fetchers/NpmFetcher');
 const Package = require('./Package');
 
@@ -12,6 +15,9 @@ class PackageFactory {
   constructor(httpClient, getTarballStats) {
     this.fetchers = {
       directory: new DirectoryFetcher(),
+      git: new GitFetcher(),
+      github: new GithubFetcher(httpClient, getTarballStats),
+      http: new HttpFetcher(httpClient, getTarballStats),
       npm: new NpmFetcher(httpClient, getTarballStats),
     };
   }

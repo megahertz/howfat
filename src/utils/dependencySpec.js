@@ -87,15 +87,46 @@ function parseSpec(name, versionSpec = undefined, localPath = undefined) {
     meta = npa(name, localPath);
   }
 
-  let source = 'npm';
-  if (meta.type === 'directory') {
-    source = 'directory';
+  let source;
+  versionSpec = meta.fetchSpec;
+  let escapedName = meta.escapedName;
+
+  switch (meta.type) {
+    case 'directory': {
+      source = 'directory';
+      break;
+    }
+
+    case 'remote': {
+      source = 'http';
+      break;
+    }
+
+    case 'git': {
+      if (meta.hosted && meta.hosted.type === 'github') {
+        const { user, project, committish } = meta.hosted;
+        source = 'github';
+        name = name.includes('/') ? project : name;
+        escapedName = `${user}/${project}`;
+        versionSpec = committish || 'master';
+      } else {
+        source = 'git';
+        escapedName = meta.fetchSpec;
+        versionSpec = meta.gitCommittish;
+      }
+
+      break;
+    }
+
+    default: {
+      source = 'npm';
+    }
   }
 
   return {
-    escapedName: meta.escapedName,
-    name: meta.name,
+    escapedName,
+    name,
     source,
-    versionSpec: meta.fetchSpec,
+    versionSpec,
   };
 }

@@ -94,5 +94,34 @@ describe('utils/dependencySpec', () => {
         versionSpec: '^1.0.0',
       });
     });
+
+    it('should parse github dependency', () => {
+      expect(dependencySpec.parseSpec('test', 'test/repo')).toEqual({
+        escapedName: 'test/repo',
+        name: 'test',
+        source: 'github',
+        versionSpec: 'master',
+      });
+    });
+
+
+    it('should parse git dependency', () => {
+      expect(dependencySpec.parseSpec('test', 'git+ssh://git@pkg.it:pkg.git'))
+        .toEqual({
+          escapedName: 'git@pkg.it:pkg.git',
+          name: 'test',
+          source: 'git',
+          versionSpec: null,
+        });
+    });
+
+    it('should parse http dependency', () => {
+      expect(dependencySpec.parseSpec('test',  'http://pkg.it/1.tgz')).toEqual({
+        escapedName: 'test',
+        name: 'test',
+        source: 'http',
+        versionSpec: 'http://pkg.it/1.tgz',
+      });
+    });
   });
 });

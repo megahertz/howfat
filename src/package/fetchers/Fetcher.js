@@ -11,19 +11,6 @@ class Fetcher {
   }
 
   /**
-   * @param {string} url
-   * @return {Promise<Stats>}
-   * @protected
-   */
-  async fetchStats(url) {
-    if (url) {
-      return this.getTarballStats(url, this.httpClient);
-    }
-
-    return { fileCount: 0, unpackedSize: 0 };
-  }
-
-  /**
    * @param {object} packageJson
    * @return {{ dev: {}, normal: {}, peer: {}, optional: {} }}
    * @protected
