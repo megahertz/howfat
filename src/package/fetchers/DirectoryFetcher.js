@@ -21,6 +21,7 @@ class DirectoryFetcher extends Fetcher {
       pkg.name = packageJson.name;
     }
 
+    pkg.localPath = versionSpec;
     pkg.version = packageJson.version;
     pkg.dependencies = this.extractDependencies(packageJson);
     // TODO: implement

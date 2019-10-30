@@ -1,11 +1,12 @@
 'use strict';
 
-const fs                           = require('fs');
-const path                         = require('path');
-const { createDependencyFactory }  = require('../dependency');
-const { createPackageFactory }     = require('../package');
-const Tree                         = require('../reporters/Tree');
+const fs = require('fs');
+const path = require('path');
+const { createDependencyFactory } = require('../dependency');
+const { createPackageFactory } = require('../package');
+const Tree = require('../reporters/Tree');
 const { createDependencyResolver } = require('../resolver');
+const HttpClient = require('../utils/http/HttpClient');
 
 const dependencyFactory = createDependencyFactory();
 const packageFactory = createPackageFactory(null);
@@ -16,8 +17,8 @@ module.exports = {
   createSimpleGraph,
   dependencyFactory,
   getFixtureName,
+  loadProject,
   loadFixture,
-  loadFixtureWithoutCache,
   printDependencyGraph,
 };
 
@@ -67,7 +68,7 @@ function getFixtureName(packageName) {
 }
 
 /**
- * Create dependencies graph from the fixture
+ * Create dependencies graph from the fixture (cached version)
  * @param {string} packageName
  * @return {Promise<FixtureGraph>}
  */
@@ -76,7 +77,9 @@ async function loadFixture(packageName) {
     return fixtureCache[packageName];
   }
 
-  return loadFixtureWithoutCache(packageName);
+  const fixture = await loadFixtureWithoutCache(packageName);
+  fixtureCache[packageName] = fixture;
+  return fixture;
 }
 
 /**
@@ -85,31 +88,26 @@ async function loadFixture(packageName) {
  * @return {Promise<FixtureGraph>}
  */
 async function loadFixtureWithoutCache(packageName) {
-  const root = dependencyFactory.createGroup();
-  root.addDependency(dependencyFactory.create(packageName));
-
-  const fixtureName = getFixtureName(packageName);
-  const httpClient = {
-    getJson: getFixtureFromUrl,
-    getUsingTransformer: getFixtureFromUrl,
-  };
+  const httpClient = new HttpClientMock();
   const resolver = createDependencyResolver(httpClient, {}, dependencyFactory);
 
-  const result = new FixtureGraph(await resolver.resolve(root));
-  fixtureCache[packageName] = result;
+  const root = dependencyFactory.createGroup([packageName]);
+  return new FixtureGraph(await resolver.resolve(root));
+}
 
-  return result;
+/**
+ * Create dependencies graph from the test project
+ * @param {string} projectName
+ * @return {Promise<FixtureGraph>}
+ */
+async function loadProject(projectName) {
+  const httpClient = new HttpClientMock();
+  const resolver = createDependencyResolver(httpClient, {}, dependencyFactory);
 
-  function getFixtureFromUrl(url) {
-    const fixturePath = path.resolve(
-      __dirname,
-      'fixtures',
-      fixtureName,
-      getFixtureName(path.basename(url)) + '.json'
-    );
-
-    return fs.promises.readFile(fixturePath, 'utf8').then(JSON.parse);
-  }
+  const root = dependencyFactory.createProject(
+    path.resolve(__dirname, 'projects', projectName)
+  );
+  return new FixtureGraph(await resolver.resolve(root));
 }
 
 /**
@@ -118,6 +116,30 @@ async function loadFixtureWithoutCache(packageName) {
 function printDependencyGraph(dependency) {
   const reporter = new Tree({ isVerbose: true, printer: console.log });
   reporter.print(dependency);
+}
+
+class HttpClientMock extends HttpClient {
+  constructor() {
+    super(null, {});
+  }
+
+  async getJson(url) {
+    return this.getFixtureFromUrl(url);
+  }
+
+  async getFixtureFromUrl(url) {
+    const fixturePath = path.resolve(
+      __dirname,
+      'fixtures',
+      getFixtureName(path.basename(url)) + '.json'
+    );
+
+    return fs.promises.readFile(fixturePath, 'utf8').then(JSON.parse);
+  }
+
+  async getUsingTransformer(url, transformer) {
+    return this.getFixtureFromUrl(url);
+  }
 }
 
 class FixtureGraph {

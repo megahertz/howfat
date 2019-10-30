@@ -13,6 +13,8 @@ class Package {
     this.version = null;
     this.versionSpec = versionSpec;
 
+    this.localPath = null;
+
     this.dependencies = {
       dev: {},
       normal: {},
