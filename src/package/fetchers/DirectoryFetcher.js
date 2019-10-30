@@ -12,8 +12,12 @@ class DirectoryFetcher extends Fetcher {
    * @return {Promise<Package>}
    */
   async fetch(pkg, { versionSpec }) {
+    /** @type {string} */
+    const packagePath = versionSpec;
+
     const content = await fs.promises.readFile(
-      path.join(versionSpec, 'package.json')
+      path.join(packagePath, 'package.json'),
+      'utf8'
     );
     const packageJson = JSON.parse(content);
 
@@ -21,14 +25,40 @@ class DirectoryFetcher extends Fetcher {
       pkg.name = packageJson.name;
     }
 
-    pkg.localPath = versionSpec;
+    pkg.localPath = packagePath;
     pkg.version = packageJson.version;
     pkg.dependencies = this.extractDependencies(packageJson);
-    // TODO: implement
-    pkg.stats = { fileCount: 0, unpackedSize: 0 };
+    pkg.stats = await this.getDirStats(packagePath);
     pkg.requirements = this.extractRequirements(packageJson);
 
     return pkg;
+  }
+
+  /**
+   *
+   * @param {string} directory
+   * @param {object} initial
+   * @return {Promise<{ unpackedSize: number, fileCount: number }>}
+   */
+  async getDirStats(directory, initial = { fileCount: 0, unpackedSize: 0 }) {
+    const files = await fs.promises.readdir(directory);
+
+    const promises = files
+      .filter(file => file !== 'node_modules')
+      .map(async (file) => {
+        const filePath = path.join(directory, file);
+        const stat = await fs.promises.stat(filePath);
+        if (stat.isDirectory()) {
+          return this.getDirStats(filePath, initial);
+        }
+
+        initial.fileCount += 1;
+        initial.unpackedSize += stat.size;
+      });
+
+    await Promise.all(promises);
+
+    return initial;
   }
 }
 
