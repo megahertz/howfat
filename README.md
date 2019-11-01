@@ -6,27 +6,65 @@ Shows how fat is a package together with its dependencies
 
 ![howfat](docs/screenshot.png)
 
-## Why should I cate about my package size?
-
-- Small package is installed much faster on CI
-- Runs faster via `npx`
-- Less dependencies = less troubles
-
 ## Usage
 
-Just show package stats:
+### Simple
 
-`npx howfat PACKAGENAME`
+`npx howfat mkdirp`
 
-Show dependency tree stats:
+Specified version or version range:
 
-`npx howfat PACKAGENAME -r tree`
+`npx howfat mkdirp@^0.5.0`
 
-Show stats of the current package:
+Local packages
 
 ```bash
-cd MYPACKAGE
+cd my-project
 npx howfat
+```
+
+`npx howfat ../my-other-package`
+
+Git or github
+
+`npx howfat https://github.com/substack/node-mkdirp`
+
+`npx howfat ssh://git@github.com:substack/node-mkdirp.git#0.3.4`
+
+### Different reporters
+
+Show all dependencies as a tree:
+
+```
+$ npx howfat -r tree mkdirp
+mkdirp@0.5.1 (1 dep, 41.49kb, 37 files)
+╰── minimist@0.0.8 (20.78kb, 14 files)
+```
+
+as a table:
+
+```
+$ npx howfat -r table mkdirp
+mkdirp@0.5.1 (1 dep, 41.49kb, 37 files)
+╭────────────────┬──────────────┬─────────┬───────╮
+│ Name           │ Dependencies │    Size │ Files │
+├────────────────┼──────────────┼─────────┼───────┤
+│ minimist@0.0.8 │            0 │ 20.78kb │    14 │
+╰────────────────┴──────────────┴─────────┴───────╯
+```
+
+### Other options
+
+```
+  -d, --dev-dependencies BOOLEAN   Fetch dev dependencies, default false
+  -p, --peer-dependencies BOOLEAN  Fetch peer dependencies, default false
+  
+  -r, --reporter STRING            'default', 'tree'
+  -v, --verbose BOOLEAN            Show additional logs
+  
+  --connection-limit NUMBER        Max simultaneous connections, default 10
+  --timeout NUMBER                 Request timeout in ms, default 10000
+  --retry-count NUMBER             Try to fetch again of failure, default 5
 ```
 
 ## Accuracy
@@ -35,3 +73,9 @@ Different package managers use different dependency resolution algorithms. Even
 different versions of the same manager will resolve different dependency tree.
 So this package tries to calculate stats similar to `npm`, but keep in mind that
 it provides approximate results.
+
+## Why should I cate about my package size?
+
+- Small package is installed much faster on CI
+- Runs faster via `npx`
+- Less dependencies = less troubles
