@@ -1,6 +1,6 @@
 'use strict';
 
-const { getLatestVersion } = require('../utils/dependencySpec');
+const { getLatestVersion } = require('../utils/spec');
 
 class DependencyCache {
   constructor() {

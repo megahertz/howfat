@@ -1,6 +1,6 @@
 'use strict';
 
-const { isRightPlatform } = require('../utils/dependencySpec');
+const { isRightPlatform } = require('../utils/spec');
 const graph = require('../dependency/graph');
 
 class DependencyResolver {

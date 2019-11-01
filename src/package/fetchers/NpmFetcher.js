@@ -3,7 +3,7 @@
 const {
   filterReleases,
   getLatestVersion,
-} = require('../../utils/dependencySpec');
+} = require('../../utils/spec');
 const Package = require('../Package');
 const Fetcher = require('./Fetcher');
 

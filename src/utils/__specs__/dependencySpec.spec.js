@@ -1,7 +1,7 @@
 'use strict';
 
 const { describe, expect, jasmine, it } = require('humile');
-const dependencySpec = require('../dependencySpec');
+const dependencySpec = require('../spec');
 
 describe('utils/dependencySpec', () => {
   it('filterReleases', () => {

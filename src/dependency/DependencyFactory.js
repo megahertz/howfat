@@ -1,6 +1,6 @@
 'use strict';
 
-const { parseSpec } = require('../utils/dependencySpec');
+const { parseSpec } = require('../utils/spec');
 const Dependency = require('./Dependency');
 const DuplicateDependency = require('./DuplicateDependency');
 const GroupDependency = require('./GroupDependency');
