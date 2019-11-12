@@ -1,19 +1,9 @@
 'use strict';
 
+const Default = require('./Default');
 const { colorGray, formatSize, formatStats } = require('./helpers');
 
-/**
- * @implements Reporter
- */
-class Table {
-  /**
-   * @param {ReporterOptions} options
-   */
-  constructor(options) {
-    this.printer = options.printer;
-    this.colors = options.colors;
-  }
-
+class Table extends Default {
   /**
    * @param {Dependency} dependency
    */
@@ -33,7 +23,10 @@ class Table {
    * @private
    */
   draw(dependency) {
-    this.printer(dependency.toString() + formatStats(dependency, this.colors));
+    this.printer(dependency.toString() + formatStats(dependency, {
+      shortSize: this.shortSize,
+      useColors: this.useColors,
+    }));
 
     const rows = dependency.children
       .map((child) => {
@@ -44,7 +37,12 @@ class Table {
       })
       .sort((a, b) => b.unpackedSize - a.unpackedSize)
       .map((row) => {
-        row.unpackedSize = formatSize(row.unpackedSize);
+        let size = row.unpackedSize;
+        if (this.shortSize) {
+          size = formatSize(size);
+        }
+
+        row.unpackedSize = size;
         return row;
       });
 

@@ -33,13 +33,10 @@ export type MapDependencyCallback = (
 
 export type ProgressIndicatorType = 'url' | 'stat'
 
-export interface Reporter {
-  new(options?: ReporterOptions): Reporter;
-  print(dependency: Dependency)
-}
-
-
 export interface ReporterOptions {
+  name?: string;
+  shortSize?: boolean;
+  useColors?: boolean;
   printer?(...args: string[]);
 }
 

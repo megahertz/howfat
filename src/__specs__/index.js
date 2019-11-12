@@ -118,7 +118,7 @@ async function loadProject(projectName) {
  * @param {Dependency} dependency
  */
 function printDependencyGraph(dependency) {
-  const reporter = new Tree({ isVerbose: true, printer: console.log });
+  const reporter = new Tree({ printer: console.log });
   reporter.print(dependency);
 }
 

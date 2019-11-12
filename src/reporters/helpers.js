@@ -21,10 +21,12 @@ function formatSize(bytes) {
 
 /**
  * @param {Dependency} dependency
- * @param {boolean} useColors
+ * @param {object} options
+ * @param {boolean} options.shortSize
+ * @param {boolean} options.useColors
  * @return {string}
  */
-function formatStats(dependency, useColors = process.stdout.isTTY) {
+function formatStats(dependency, options) {
   const stats = dependency.getStatsRecursive();
   const results = [];
   const label = dependency.getLabel();
@@ -39,7 +41,11 @@ function formatStats(dependency, useColors = process.stdout.isTTY) {
   }
 
   if (stats.unpackedSize > 0) {
-    results.push(formatSize(stats.unpackedSize));
+    if (options.shortSize) {
+      results.push(formatSize(stats.unpackedSize));
+    } else {
+      results.push(stats.unpackedSize);
+    }
   }
 
   if (stats.fileCount > 0) {
@@ -51,7 +57,7 @@ function formatStats(dependency, useColors = process.stdout.isTTY) {
     return '';
   }
 
-  return colorGray(' (' + results.join(', ') + ')', useColors);
+  return colorGray(' (' + results.join(', ') + ')', options.useColors);
 }
 
 

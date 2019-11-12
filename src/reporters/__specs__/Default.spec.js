@@ -9,9 +9,8 @@ describe('reporters/Default', () => {
     const graph = await loadFixture('npm-package-arg');
     const lines = [];
     const tree = new Default({
-      printer(...text) {
-        lines.push(text.join(' '));
-      },
+      printer: (...text) => lines.push(text.join(' ')),
+      useColors: false,
     });
 
     tree.print(graph.getRoot());

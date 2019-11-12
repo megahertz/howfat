@@ -20,11 +20,7 @@ main().catch((error) => {
 });
 
 async function main() {
-  const httpClient = createHttpClient({
-    connectionLimit: config.connectionLimit,
-    timeout: config.timeout,
-    retryCount: config.retryCount,
-  });
+  const httpClient = createHttpClient(config.httpOptions);
   httpClient.on('error', (task) => {
     console.error('Warning:', task.lastError.message);
   });
@@ -53,7 +49,7 @@ async function main() {
   rootDependency = await resolver.resolve(rootDependency);
   progressIndicator.finish();
 
-  createReporter(config.reporter).print(rootDependency);
+  createReporter(config.reporterOptions).print(rootDependency);
 
   process.exit();
 }

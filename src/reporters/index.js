@@ -9,14 +9,13 @@ module.exports = {
 };
 
 /**
- * @param {string} name
  * @param {ReporterOptions} options
- * @return {Reporter}
+ * @return {Default}
  */
-function createReporter(name, options = {}) {
+function createReporter(options = {}) {
   options = { printer: console.log, ...options };
 
-  switch (name) {
+  switch (options.name) {
     case 'table': return new Table(options);
     case 'tree': return new Tree(options);
     default: return new Default(options);

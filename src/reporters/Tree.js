@@ -1,23 +1,13 @@
 'use strict';
 
+const Default = require('./Default');
 const { formatStats } = require('./helpers');
 
 const FIRST = 0;
 const NORMAL = 1;
 const LAST = 2;
 
-/**
- * @implements Reporter
- */
-class Tree {
-  /**
-   * @param {ReporterOptions} options
-   */
-  constructor(options) {
-    this.printer = options.printer;
-    this.colors = options.colors;
-  }
-
+class Tree extends Default {
   /**
    * @param {Dependency} dependency
    */
@@ -54,7 +44,10 @@ class Tree {
     }
 
     this.printer(
-      selfPrefix + dependency + formatStats(dependency, this.colors)
+      selfPrefix + dependency + formatStats(dependency, {
+        shortSize: this.shortSize,
+        useColors: this.useColors,
+      })
     );
 
     dependencies.forEach((dep, i, deps) => {
