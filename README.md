@@ -73,10 +73,10 @@ mkdirp@0.5.1 (1 dep, 41.49kb, 37 files)
 
 Different package managers use different dependency resolution algorithms. Even
 different versions of the same manager will resolve different dependency tree.
-So this package tries to calculate stats similar to `npm`, but keep in mind that
+So, this package tries to calculate stats similar to `npm`, but keep in mind that
 it provides approximate results.
 
-## Why should I cate about my package size?
+## Why should I care about my package size?
 
 - Small package is installed much faster on CI
 - Runs faster via `npx`
