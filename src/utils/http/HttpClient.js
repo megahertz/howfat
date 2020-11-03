@@ -4,6 +4,10 @@ const { EventEmitter } = require('events');
 const HttpTask = require('./HttpTask');
 
 /**
+ * @typedef { import('http').RequestOptions } RequestOptions
+ */
+
+/**
  * Allow to execute multiple http requests using:
  * - concurrent connections
  * - queue
@@ -13,19 +17,17 @@ class HttpClient extends EventEmitter {
   /**
    *
    * @param {(url: string) => Response} getFunction
-   * @param {object} [options]
-   * @param {number} [options.connectionLimit]
-   * @param {number} [options.timeout]
-   * @param {number} [options.retryCount]
+   * @param {RequestOptions & { connectionLimit?, retryCount? }} [options]
    */
   constructor(getFunction, options = {}) {
     super();
 
     this.getFunction = getFunction;
-
-    this.connectionLimit = options.connectionLimit || 10;
-    this.timeout = options.timeout || 10000;
-    this.retryCount = options.retryCount || 5;
+    this.options = {
+      ...options,
+      connectionLimit: options.connectionLimit || 10,
+      retryCount: options.retryCount || 5,
+    };
 
     this.queue = [];
     this.activeTasks = [];
@@ -41,7 +43,7 @@ class HttpClient extends EventEmitter {
    */
   getJson(url) {
     return this.addTask(url, () => {
-      return this.getFunction(url, { timeout: this.timeout }).asJson();
+      return this.get(url).asJson();
     });
   }
 
@@ -54,8 +56,16 @@ class HttpClient extends EventEmitter {
    */
   getUsingTransformer(url, transformer) {
     return this.addTask(url, () => {
-      return transformer(this.getFunction(url, { timeout: this.timeout }));
+      return transformer(this.get(url));
     });
+  }
+
+  /**
+   * @return {Promise<Response>}
+   * @private
+   */
+  get(url) {
+    return this.getFunction(url, this.options);
   }
 
   /**
@@ -113,7 +123,7 @@ class HttpClient extends EventEmitter {
    * @private
    */
   next() {
-    if (this.activeTasks.length >= this.connectionLimit) {
+    if (this.activeTasks.length >= this.options.connectionLimit) {
       return;
     }
 
@@ -131,7 +141,7 @@ class HttpClient extends EventEmitter {
    * @private
    */
   runTask(task) {
-    if (task.retries >= this.retryCount) {
+    if (task.retries >= this.options.retryCount) {
       task.setRejected();
       this.finishTask(task);
       return;

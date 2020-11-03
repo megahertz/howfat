@@ -21,10 +21,12 @@ function getConfig() {
           --no-colors BOOLEAN          Prevent color output
           --no-human-readable BOOLEAN  Show size in bytes 
       
-      --connection-limit NUMBER        Max simultaneous connections, default 10
-      --timeout NUMBER                 Request timeout in ms, default 10000
-      --retry-count NUMBER             Try to fetch again of failure, default 5
+      --http                           Node.js RequestOptions, like:
+      --http.timeout NUMBER            Request timeout in ms, default 10000
+      --http.connection-limit NUMBER   Max simultaneous connections, default 10
+      --http.retry-count NUMBER        Try to fetch again of failure, default 5
       
+      --show-config                    Show the current configuration
       --version                        Show howfat version
       --help                           Show this help
   `);
@@ -42,26 +44,39 @@ class Config {
       peer: opts.peerDependencies === true,
     };
 
+    const http = opts.http || {};
     this.httpOptions = {
-      connectionLimit: opts.connectionLimit || 10,
-      timeout: opts.timeout || 10000,
-      retryCount:  opts.retryCount || 5,
+      ...http,
+      connectionLimit: http.connectionLimit || 10,
+      timeout: http.timeout || 10000,
+      retryCount:  http.retryCount || 5,
     };
 
     /**
      * @type {ReporterOptions}
      */
     this.reporterOptions = {
-      name: opts.reporter,
+      name: opts.reporter || 'default',
       shortSize: opts.humanReadable !== false,
       useColors: opts.colors !== false,
     };
 
-    this.isVerbose = opts.verbose;
+    this.isVerbose = opts.verbose || false;
 
     this.fetchedPackages = opts._;
     this.projectPath = opts._.length < 1 ? opts.getProjectPath() : undefined;
 
     this.helpText = opts.getHelpText();
+
+    if (opts.showConfig) {
+      console.info(this.toJSON());
+      process.exit();
+    }
+  }
+
+  toJSON() {
+    const config = { ...this };
+    delete config.helpText;
+    return config;
   }
 }

@@ -64,9 +64,10 @@ mkdirp@0.5.1 (1 dep, 41.49kb, 37 files)
       --no-colors BOOLEAN          Prevent color output
       --no-human-readable BOOLEAN  Show size in bytes 
   
-  --connection-limit NUMBER        Max simultaneous connections, default 10
-  --timeout NUMBER                 Request timeout in ms, default 10000
-  --retry-count NUMBER             Try to fetch again of failure, default 5
+  --http                           Node.js RequestOptions, like:
+  --http.timeout NUMBER            Request timeout in ms, default 10000
+  --http.connection-limit NUMBER   Max simultaneous connections, default 10
+  --http.retry-count NUMBER        Try to fetch again of failure, default 5
 ```
 
 ## Accuracy
