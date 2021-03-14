@@ -22,7 +22,7 @@ function createFixture(packageName) {
 
   httpClient
     .on('finish', serializeTaskResponse)
-    .on('start', task => console.error('get', task.url));
+    .on('start', (task) => console.error('get', task.url));
 
   return resolver.resolve(factory.createGroup([packageName]));
 }

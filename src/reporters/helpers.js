@@ -60,7 +60,6 @@ function formatStats(dependency, options) {
   return colorGray(' (' + results.join(', ') + ')', options.useColors);
 }
 
-
 function colorGray(text, useColors = process.stdout.isTTY) {
   if (!useColors) {
     return text;

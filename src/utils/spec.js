@@ -15,7 +15,7 @@ module.exports = {
  * @return {string[]}
  */
 function filterReleases(availableVersions) {
-  return availableVersions.filter(v => !semver.prerelease(v));
+  return availableVersions.filter((v) => !semver.prerelease(v));
 }
 
 /**

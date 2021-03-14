@@ -68,9 +68,9 @@ class DependencyCache {
    * @private
    */
   findSatisfyingPackage(dependencies, versionSpec) {
-    const versions = dependencies.map(dep => dep.version).filter(Boolean);
+    const versions = dependencies.map((dep) => dep.version).filter(Boolean);
     const maxVersion = getLatestVersion(versions, versionSpec);
-    return dependencies.find(pkg => pkg.version === maxVersion);
+    return dependencies.find((pkg) => pkg.version === maxVersion);
   }
 
   /**
@@ -79,8 +79,8 @@ class DependencyCache {
    */
   async waitForPendingDependencies(dependencies) {
     const pending = dependencies
-      .filter(dep => !dep.version)
-      .map(pkg => pkg.waitForResolve());
+      .filter((dep) => !dep.version)
+      .map((pkg) => pkg.waitForResolve());
 
     return Promise.all(pending);
   }

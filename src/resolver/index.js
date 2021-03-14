@@ -4,7 +4,6 @@ const DependencyCache = require('./DependencyCache');
 const DependencyResolver = require('./DependencyResolver');
 const { createDependencyFactory } = require('../dependency');
 
-
 module.exports = {
   createDependencyResolver,
 };

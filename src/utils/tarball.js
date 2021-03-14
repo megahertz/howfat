@@ -32,7 +32,7 @@ function statsFromStream(stream) {
 
       if (entry.path.match(/^[^/]+\/package.json$/)) {
         const chunks = [];
-        entry.on('data', chunk => chunks.push(chunk));
+        entry.on('data', (chunk) => chunks.push(chunk));
         entry.on('error', reject);
         entry.on('end', () => {
           try {

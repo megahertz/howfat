@@ -160,7 +160,7 @@ class FixtureGraph {
     let node = this.getFixtureRoot();
 
     paths.forEach((nodeName) => {
-      node = node && node.children.find(dep => dep.name === nodeName);
+      node = node && node.children.find((dep) => dep.name === nodeName);
     });
 
     return node;
