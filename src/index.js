@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+/* eslint-disable no-console */
+
 'use strict';
 
 const { createDependencyFactory } = require('./dependency');
@@ -28,7 +30,7 @@ async function main() {
   const dependencyFactory = createDependencyFactory();
   const progressIndicator = createProgressIndicator(
     httpClient,
-    config.isVerbose ? 'url' : 'stat'
+    config.isVerbose ? 'url' : 'stat',
   );
 
   let rootDependency;
@@ -44,7 +46,7 @@ async function main() {
   const resolver = createDependencyResolver(
     createPackageFactory(httpClient),
     dependencyFactory,
-    config.dependencyTypeFilter
+    config.dependencyTypeFilter,
   );
   rootDependency = await resolver.resolve(rootDependency);
   progressIndicator.finish();

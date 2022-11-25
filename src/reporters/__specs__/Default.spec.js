@@ -1,7 +1,7 @@
 'use strict';
 
 const { describe, expect, it } = require('humile');
-const Default = require('../Default');
+const Default = require('../Simple');
 const { loadFixture } = require('../../__specs__');
 
 describe('reporters/Default', () => {

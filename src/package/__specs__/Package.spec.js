@@ -10,7 +10,7 @@ describe('Package', () => {
     pkg.dependencies = {
       normal: {
         'lighter-config': '>=1.1.0 <2',
-        fsevents: '>=1.0.14 <2',
+        'fsevents': '>=1.0.14 <2',
       },
       optional: {
         debug: '^1.0.0',
@@ -23,7 +23,7 @@ describe('Package', () => {
         dev: {},
         normal: {
           'lighter-config': '>=1.1.0 <2',
-          fsevents: '>=1.0.14 <2',
+          'fsevents': '>=1.0.14 <2',
         },
         optional: {
           debug: '^1.0.0',
@@ -37,7 +37,7 @@ describe('Package', () => {
         dev: {},
         normal: {
           'lighter-config': '>=1.1.0 <2',
-          fsevents: '>=1.0.14 <2',
+          'fsevents': '>=1.0.14 <2',
         },
         optional: {},
         peer: {},

@@ -6,6 +6,12 @@ module.exports = {
     es6: true,
     jasmine: true,
   },
+
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'script',
+  },
+
   rules: {
     'arrow-body-style': 'off',
     'class-methods-use-this': 'off',
@@ -27,6 +33,6 @@ module.exports = {
     'prefer-destructuring': 'off',
     'prefer-template': 'off',
     'quote-props': ['error', 'consistent-as-needed'],
-    'strict': 'off',
+    'strict': ['error', 'global'],
   },
 };

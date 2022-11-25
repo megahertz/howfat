@@ -8,11 +8,11 @@ class HttpTask {
    * @param {function} reject
    */
   constructor(start, url, resolve, reject) {
-    this.startFunction  = start;
+    this.startFunction = start;
 
-    this.url     = url;
+    this.url = url;
     this.resolve = resolve;
-    this.reject  = reject;
+    this.reject = reject;
 
     this.retries = 0;
     this.lastError = null;

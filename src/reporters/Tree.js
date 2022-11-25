@@ -1,6 +1,6 @@
 'use strict';
 
-const Default = require('./Default');
+const Default = require('./Simple');
 const { formatStats } = require('./helpers');
 
 const FIRST = 0;

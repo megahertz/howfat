@@ -9,7 +9,7 @@ const tarball = require('../tarball');
 describe('tarball', () => {
   it('should load package information from tar gzip stream', async () => {
     const readStream = fs.createReadStream(
-      path.join(__dirname, 'tarball.fixture.tgz')
+      path.join(__dirname, 'tarball.fixture.tgz'),
     );
     const stats = await tarball.statsFromStream(readStream);
 

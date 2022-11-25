@@ -5,7 +5,6 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const DirectoryFetcher = require('./DirectoryFetcher');
-const Package = require('../Package');
 
 class GitFetcher extends DirectoryFetcher {
   /**
@@ -21,7 +20,10 @@ class GitFetcher extends DirectoryFetcher {
 
     try {
       await this.cloneRepo(escapedName, tmpDirName);
-      versionSpec && await this.checkout(versionSpec);
+
+      if (versionSpec) {
+        await this.checkout(versionSpec);
+      }
 
       await this.updatePackageFromDirectory(pkg, clonePath);
     } finally {
@@ -70,8 +72,8 @@ class GitFetcher extends DirectoryFetcher {
         }
       });
 
-      git.stdout.on('data', buffer => stdout.push(buffer.toString()));
-      git.stderr.on('data', buffer => stderr.push(buffer.toString()));
+      git.stdout.on('data', (buffer) => stdout.push(buffer.toString()));
+      git.stderr.on('data', (buffer) => stderr.push(buffer.toString()));
     });
   }
 

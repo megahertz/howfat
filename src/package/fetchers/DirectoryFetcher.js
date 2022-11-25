@@ -2,7 +2,6 @@
 
 const fs = require('fs');
 const path = require('path');
-const Package = require('../Package');
 const Fetcher = require('./Fetcher');
 
 class DirectoryFetcher extends Fetcher {
@@ -26,7 +25,7 @@ class DirectoryFetcher extends Fetcher {
   async updatePackageFromDirectory(pkg, dirPath) {
     const content = await fs.promises.readFile(
       path.join(dirPath, 'package.json'),
-      'utf8'
+      'utf8',
     );
 
     const packageJson = JSON.parse(content);
@@ -52,12 +51,13 @@ class DirectoryFetcher extends Fetcher {
     const files = await fs.promises.readdir(directory);
 
     const promises = files
-      .filter(file => file !== 'node_modules')
+      .filter((file) => file !== 'node_modules')
       .map(async (file) => {
         const filePath = path.join(directory, file);
         const stat = await fs.promises.stat(filePath);
         if (stat.isDirectory()) {
-          return this.getDirStats(filePath, initial);
+          await this.getDirStats(filePath, initial);
+          return;
         }
 
         initial.fileCount += 1;

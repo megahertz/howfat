@@ -33,7 +33,7 @@ class Response {
     const stream = this.stream;
 
     return new Promise((resolve, reject) => {
-      stream.on('data', chunk => chunks.push(chunk));
+      stream.on('data', (chunk) => chunks.push(chunk));
       stream.on('error', reject);
       stream.on('end', () => resolve(Buffer.concat(chunks)));
     });
@@ -113,7 +113,7 @@ function createHttpStream(uri, options = {}) {
 
   function error(e) {
     stream.emit('error', e);
-    request.abort();
-    responseInstance && responseInstance.resume();
+    request.destroy();
+    responseInstance?.resume();
   }
 }

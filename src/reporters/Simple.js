@@ -2,7 +2,7 @@
 
 const { formatSize } = require('./helpers');
 
-class Default {
+class Simple {
   /**
    * @param {ReporterOptions} options
    */
@@ -32,4 +32,4 @@ class Default {
   }
 }
 
-module.exports = Default;
+module.exports = Simple;

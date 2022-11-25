@@ -2,11 +2,11 @@
 
 class Fetcher {
   /**
-   * @param {Package} pkg
-   * @param {DependencySpec} dependencySpec
+   * @param {Package} _pkg
+   * @param {DependencySpec} _dependencySpec
    * @return {Promise<Package>}
    */
-  async fetch(pkg, dependencySpec) {
+  async fetch(_pkg, _dependencySpec) {
     throw new Error('Not implemented in base Fetcher');
   }
 

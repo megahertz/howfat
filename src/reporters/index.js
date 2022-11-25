@@ -1,6 +1,6 @@
 'use strict';
 
-const Default = require('./Default');
+const Default = require('./Simple');
 const Table = require('./Table');
 const Tree = require('./Tree');
 

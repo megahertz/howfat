@@ -1,6 +1,6 @@
 'use strict';
 
-const Default = require('./Default');
+const Default = require('./Simple');
 const { colorGray, formatSize, formatStats } = require('./helpers');
 
 class Table extends Default {

@@ -50,5 +50,4 @@ describe('Dependency', () => {
 
     return expectAsync(promise).toBeResolved();
   });
-
 });

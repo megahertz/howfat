@@ -84,7 +84,7 @@ class HttpClient extends EventEmitter {
         fetchFunction,
         url,
         resolve,
-        reject
+        reject,
       ));
 
       this.next();
@@ -114,7 +114,7 @@ class HttpClient extends EventEmitter {
   finishTask(task) {
     this.emit('finish', task);
     this.finishedCount += 1;
-    this.activeTasks = this.activeTasks.filter(t => t !== task);
+    this.activeTasks = this.activeTasks.filter((t) => t !== task);
     this.emitQueue();
     this.next();
   }

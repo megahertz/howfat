@@ -21,7 +21,9 @@ class ProgressIndicator {
    * @final
    */
   finish() {
-    !this.isDisabled() && this.onFinish();
+    if (!this.isDisabled()) {
+      this.onFinish();
+    }
   }
 
   isDisabled() {
@@ -35,17 +37,17 @@ class ProgressIndicator {
   }
 
   /**
-   * @param {HttpTask} task
+   * @param {HttpTask} _task
    * @protected
    */
-  onStartDownloading(task) {
+  onStartDownloading(_task) {
   }
 
   /**
-   * @param {HttpProgressEvent} progress
+   * @param {HttpProgressEvent} _progress
    * @protected
    */
-  onProgress(progress) {
+  onProgress(_progress) {
   }
 
   /**

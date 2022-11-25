@@ -1,6 +1,5 @@
 'use strict';
 
-const Package = require('../Package');
 const Fetcher = require('./Fetcher');
 
 class HttpFetcher extends Fetcher {
@@ -19,7 +18,7 @@ class HttpFetcher extends Fetcher {
    * @param {DependencySpec} dependencySpec
    * @return {Promise<Package>}
    */
-  async fetch(pkg, { escapedName, versionSpec }) {
+  async fetch(pkg, { versionSpec }) {
     const stats = await this.getTarballStats(versionSpec, this.httpClient);
     this.updatePackageByStats(pkg, stats);
     return pkg;

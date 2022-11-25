@@ -56,7 +56,7 @@ class Config {
      * @type {ReporterOptions}
      */
     this.reporterOptions = {
-      name: opts.reporter || 'default',
+      name: opts.reporter || 'tree',
       shortSize: opts.humanReadable !== false,
       useColors: opts.colors !== false,
     };

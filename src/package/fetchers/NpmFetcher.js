@@ -4,7 +4,6 @@ const {
   filterReleases,
   getLatestVersion,
 } = require('../../utils/spec');
-const Package = require('../Package');
 const Fetcher = require('./Fetcher');
 
 class NpmFetcher extends Fetcher {

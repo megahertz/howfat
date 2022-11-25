@@ -11,7 +11,7 @@ describe('reporters/Tree', () => {
     const lines = [];
 
     const tree = new Tree({
-      printer: text => lines.push(text),
+      printer: (text) => lines.push(text),
       useColors: false,
     });
     tree.print(graph.getRoot());

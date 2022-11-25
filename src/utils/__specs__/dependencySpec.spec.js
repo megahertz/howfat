@@ -1,6 +1,6 @@
 'use strict';
 
-const { describe, expect, jasmine, it } = require('humile');
+const { describe, expect, it } = require('humile');
 const dependencySpec = require('../spec');
 
 describe('utils/dependencySpec', () => {
@@ -104,7 +104,6 @@ describe('utils/dependencySpec', () => {
       });
     });
 
-
     it('should parse git dependency', () => {
       expect(dependencySpec.parseSpec('test', 'git+ssh://git@pkg.it:pkg.git'))
         .toEqual({
@@ -116,7 +115,7 @@ describe('utils/dependencySpec', () => {
     });
 
     it('should parse http dependency', () => {
-      expect(dependencySpec.parseSpec('test',  'http://pkg.it/1.tgz')).toEqual({
+      expect(dependencySpec.parseSpec('test', 'http://pkg.it/1.tgz')).toEqual({
         escapedName: 'test',
         name: 'test',
         source: 'http',

@@ -18,7 +18,7 @@ module.exports = {
 function createProgressIndicator(
   httpClient,
   type = 'stat',
-  stream = process.stderr
+  stream = process.stderr,
 ) {
   switch (type) {
     case 'stat': return new StatProgressIndicator(httpClient, stream);
