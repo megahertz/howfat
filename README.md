@@ -1,5 +1,5 @@
 # howfat
-[![Build Status](https://travis-ci.org/megahertz/howfat.svg?branch=master)](https://travis-ci.org/megahertz/howfat)
+[![Tests](https://github.com/megahertz/howfat/actions/workflows/tests.yml/badge.svg)](https://github.com/megahertz/howfat/actions/workflows/tests.yml)
 [![NPM version](https://badge.fury.io/js/howfat.svg)](https://badge.fury.io/js/howfat)
 
 Shows how fat is a package together with its dependencies

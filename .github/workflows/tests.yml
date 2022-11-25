@@ -1,0 +1,30 @@
+name: Tests
+
+on:
+  - pull_request
+  - push
+
+env:
+  CI: 1
+
+jobs:
+  main:
+    defaults:
+      run:
+        shell: bash
+
+    strategy:
+      matrix:
+        include:
+          - node_version: latest
+          - node_version: 10
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node_version }}
+
+      - run: npm install
+      - run: npm run test:full
