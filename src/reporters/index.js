@@ -13,6 +13,7 @@ module.exports = {
  * @return {Default}
  */
 function createReporter(options = {}) {
+  // eslint-disable-next-line no-console
   options = { printer: console.log, ...options };
 
   switch (options.name) {

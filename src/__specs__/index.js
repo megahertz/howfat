@@ -31,7 +31,7 @@ module.exports = {
 function createDependency(name, versionSpec, { version = null } = {}) {
   const dependency = dependencyFactory.create(name, versionSpec);
   dependency.package = packageFactory.createUnresolved(
-    dependency.spec
+    dependency.spec,
   );
   dependency.package.version = version || versionSpec;
   return dependency;
@@ -90,7 +90,7 @@ async function loadFixture(packageName) {
 async function loadFixtureWithoutCache(packageName) {
   const resolver = createDependencyResolver(
     createPackageFactory(new HttpClientMock()),
-    dependencyFactory
+    dependencyFactory,
   );
 
   const root = dependencyFactory.createGroup([packageName]);
@@ -105,11 +105,11 @@ async function loadFixtureWithoutCache(packageName) {
 async function loadProject(projectName) {
   const resolver = createDependencyResolver(
     createPackageFactory(new HttpClientMock()),
-    dependencyFactory
+    dependencyFactory,
   );
 
   const root = dependencyFactory.createProject(
-    path.resolve(__dirname, 'projects', projectName)
+    path.resolve(__dirname, 'projects', projectName),
   );
   return new FixtureGraph(await resolver.resolve(root));
 }
@@ -118,6 +118,7 @@ async function loadProject(projectName) {
  * @param {Dependency} dependency
  */
 function printDependencyGraph(dependency) {
+  // eslint-disable-next-line no-console
   const reporter = new Tree({ printer: console.log });
   reporter.print(dependency);
 }
@@ -135,13 +136,13 @@ class HttpClientMock extends HttpClient {
     const fixturePath = path.resolve(
       __dirname,
       'fixtures',
-      getFixtureName(path.basename(url)) + '.json'
+      getFixtureName(path.basename(url)) + '.json',
     );
 
     return fs.promises.readFile(fixturePath, 'utf8').then(JSON.parse);
   }
 
-  async getUsingTransformer(url, transformer) {
+  async getUsingTransformer(url, _transformer) {
     return this.getFixtureFromUrl(url);
   }
 }

@@ -56,7 +56,7 @@ class DependencyResolver {
       {
         dev: this.typeFilter.dev && dependency.canIncludeDevDependencies(),
         peer: this.typeFilter.peer,
-      }
+      },
     );
     dependency.loadChildren(children);
 

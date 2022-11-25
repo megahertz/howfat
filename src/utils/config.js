@@ -49,7 +49,7 @@ class Config {
       ...http,
       connectionLimit: http.connectionLimit || 10,
       timeout: http.timeout || 10000,
-      retryCount:  http.retryCount || 5,
+      retryCount: http.retryCount || 5,
     };
 
     /**
@@ -69,7 +69,7 @@ class Config {
     this.helpText = opts.getHelpText();
 
     if (opts.showConfig) {
-      console.info(this.toJSON());
+      console.info(this.toJSON()); // eslint-disable-line no-console
       process.exit();
     }
   }

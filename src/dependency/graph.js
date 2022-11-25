@@ -46,7 +46,7 @@ async function mapAsync(dependency, callback) {
         });
     });
 
-    await Promise.all(promises);
+    await Promise.all(promises); // eslint-disable-line no-await-in-loop
     list = nextList;
   }
 

@@ -17,12 +17,12 @@ module.exports = {
 function createDependencyResolver(
   packageFactory,
   dependencyFactory = createDependencyFactory(),
-  typeFilter = {}
+  typeFilter = {},
 ) {
   return new DependencyResolver(
     packageFactory,
     dependencyFactory,
     typeFilter,
-    new DependencyCache()
+    new DependencyCache(),
   );
 }

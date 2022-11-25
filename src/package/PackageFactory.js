@@ -35,7 +35,7 @@ class PackageFactory {
     }
 
     throw new Error(
-      `PackageFactory doesn't support ${source} source (${pkg})`
+      `PackageFactory doesn't support ${source} source (${pkg})`,
     );
   }
 

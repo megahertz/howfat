@@ -59,7 +59,7 @@ class Table extends Default {
         { id: 'fileCount', title: 'Files', alignRight: true },
       ],
       rows,
-      this.printer
+      this.printer,
     );
   }
 }
@@ -68,9 +68,9 @@ module.exports = Table;
 
 function printTable(columns, rows, printer) {
   const chars = {
-    first:  { first: '╭', middle: '┬', last: '╮' },
+    first: { first: '╭', middle: '┬', last: '╮' },
     middle: { first: '├', middle: '┼', last: '┤' },
-    last:   { first: '╰', middle: '┴', last: '╯' },
+    last: { first: '╰', middle: '┴', last: '╯' },
     line: '─',
     separator: '│',
   };

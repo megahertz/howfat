@@ -47,7 +47,7 @@ class Tree extends Default {
       selfPrefix + dependency + formatStats(dependency, {
         shortSize: this.shortSize,
         useColors: this.useColors,
-      })
+      }),
     );
 
     dependencies.forEach((dep, i, deps) => {

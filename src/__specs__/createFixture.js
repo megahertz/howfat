@@ -2,6 +2,8 @@
 
 'use strict';
 
+/* eslint-disable no-console */
+
 const fs = require('fs');
 const path = require('path');
 const { createHttpClient } = require('../utils');
@@ -17,7 +19,7 @@ function createFixture(packageName) {
   const httpClient = createHttpClient();
   const resolver = createDependencyResolver(
     createPackageFactory(httpClient),
-    factory
+    factory,
   );
 
   httpClient

@@ -20,7 +20,7 @@ class DependencyFactory {
     name,
     versionSpec = undefined,
     type = 'normal',
-    localPath = undefined
+    localPath = undefined,
   ) {
     const dependencySpec = parseSpec(name, versionSpec, localPath);
     return new RealDependency(dependencySpec, type);
