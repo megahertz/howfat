@@ -87,6 +87,8 @@ function parseSpec(name, versionSpec = undefined, localPath = undefined) {
     meta = npa(name, localPath);
   }
 
+  name = meta.name;
+
   let source;
   versionSpec = meta.fetchSpec;
   let escapedName = meta.escapedName;

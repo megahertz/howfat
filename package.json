@@ -1,12 +1,13 @@
 {
   "name": "howfat",
-  "version": "0.2.6",
+  "version": "0.3.0",
   "description": "Shows how fat is a package",
   "bin": "src/index.js",
   "main": "src/index.js",
   "scripts": {
-    "test": "humile",
-    "test:full": "npm run test && npm run lint",
+    "test": "humile src",
+    "test:e2e": "humile e2e",
+    "test:full": "npm test && npm run lint && npm test:e2e",
     "lint": "eslint src",
     "postversion": "npm run test:full && git push && git push --tags",
     "prepack": "npm run test:full"
@@ -29,7 +30,7 @@
   "bugs": "https://github.com/megahertz/howfat/issues",
   "homepage": "https://github.com/megahertz/howfat#readme",
   "engines": {
-    "node": ">=10.9"
+    "node": ">=14"
   },
   "devDependencies": {
     "eslint": "^8.28.0",
@@ -38,6 +39,7 @@
     "humile": "^0.5.0"
   },
   "dependencies": {
+    "axios": "^0.26.1",
     "npm-package-arg": "^10.0.0",
     "package-options": "^0.1.4",
     "semver": "^7.3.8",
