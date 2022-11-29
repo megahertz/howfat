@@ -9,16 +9,18 @@ const path = require('path');
 const { createHttpClient } = require('../utils');
 const { createDependencyResolver } = require('../resolver');
 const { createDependencyFactory } = require('../dependency');
-const { createPackageFactory } = require('../package');
 const { getFixtureName } = require('.');
+const PackageFactory = require('../package/PackageFactory');
+const TarballReader = require('../utils/tarball/TarballReader');
 
 main(process.argv.slice(2)).catch(console.error);
 
 function createFixture(packageName) {
   const factory = createDependencyFactory();
   const httpClient = createHttpClient();
+  const tarballReader = new TarballReader({ httpClient });
   const resolver = createDependencyResolver(
-    createPackageFactory(httpClient),
+    new PackageFactory({ httpClient, tarballReader }),
     factory,
   );
 

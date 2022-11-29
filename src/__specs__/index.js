@@ -3,15 +3,20 @@
 const fs = require('fs');
 const path = require('path');
 const { createDependencyFactory } = require('../dependency');
-const { createPackageFactory } = require('../package');
+const PackageFactory = require('../package/PackageFactory');
 const Tree = require('../reporters/Tree');
 const { createDependencyResolver } = require('../resolver');
 const HttpClient = require('../utils/http/HttpClient');
+const TarballReader = require('../utils/tarball/TarballReader');
 
 const dependencyFactory = createDependencyFactory();
-const packageFactory = createPackageFactory(null);
+const packageFactory = new PackageFactory({
+  httpClient: null,
+  tarballReader: null,
+});
 const fixtureCache = {};
 
+// noinspection JSUnusedGlobalSymbols
 module.exports = {
   createDependency,
   createSimpleGraph,
@@ -89,7 +94,7 @@ async function loadFixture(packageName) {
  */
 async function loadFixtureWithoutCache(packageName) {
   const resolver = createDependencyResolver(
-    createPackageFactory(new HttpClientMock()),
+    createMockedPackageFactory(),
     dependencyFactory,
   );
 
@@ -104,7 +109,7 @@ async function loadFixtureWithoutCache(packageName) {
  */
 async function loadProject(projectName) {
   const resolver = createDependencyResolver(
-    createPackageFactory(new HttpClientMock()),
+    createMockedPackageFactory(),
     dependencyFactory,
   );
 
@@ -119,17 +124,23 @@ async function loadProject(projectName) {
  */
 function printDependencyGraph(dependency) {
   // eslint-disable-next-line no-console
-  const reporter = new Tree({ printer: console.log });
+  const reporter = new Tree({ printer: console.info });
   reporter.print(dependency);
 }
 
 class HttpClientMock extends HttpClient {
   constructor() {
-    super(null, {});
+    super({});
   }
 
-  async getJson(url) {
-    return this.getFixtureFromUrl(url);
+  async request(config) {
+    const { url } = config;
+
+    return {
+      data: this.getFixtureFromUrl(url),
+      headers: {},
+      status: 200,
+    };
   }
 
   async getFixtureFromUrl(url) {
@@ -140,10 +151,6 @@ class HttpClientMock extends HttpClient {
     );
 
     return fs.promises.readFile(fixturePath, 'utf8').then(JSON.parse);
-  }
-
-  async getUsingTransformer(url, _transformer) {
-    return this.getFixtureFromUrl(url);
   }
 }
 
@@ -184,4 +191,13 @@ class FixtureGraph {
 
     return this.getRoot().children[0];
   }
+}
+
+function createMockedPackageFactory() {
+  const httpClient = new HttpClientMock();
+  const tarballReader = new TarballReader({ httpClient });
+
+  tarballReader.readStream = (stream) => stream;
+
+  return new PackageFactory({ httpClient, tarballReader });
 }

@@ -1,164 +1,108 @@
 'use strict';
 
+const { default: Axios } = require('axios');
 const { EventEmitter } = require('events');
-const HttpTask = require('./HttpTask');
+const axiosCachePlugin = require('./interceptors/axiosCachePlugin');
+const axiosQueuePlugin = require('./interceptors/axiosQueuePlugin');
+const axiosRetryPlugin = require('./interceptors/axiosRetryPlugin');
 
 /**
- * @typedef { import('http').RequestOptions } RequestOptions
+ * @typedef {import('axios').AxiosRequestConfig} AxiosRequestConfig
  */
 
-/**
- * Allow to execute multiple http requests using:
- * - concurrent connections
- * - queue
- * - retries on failure
- */
 class HttpClient extends EventEmitter {
+  /** @type {Axios} */
+  #axios;
+
+  /** @type {AxiosRequestConfig & { connectionLimit?, retryCount? }} */
+  #config;
+
   /**
-   *
-   * @param {(url: string) => Response} getFunction
-   * @param {RequestOptions & { connectionLimit?, retryCount? }} [options]
+   * @param {AxiosRequestConfig & { connectionLimit?, retryCount? }} config
    */
-  constructor(getFunction, options = {}) {
+  constructor(config = {}) {
     super();
 
-    this.getFunction = getFunction;
-    this.options = {
-      ...options,
-      connectionLimit: options.connectionLimit || 10,
-      retryCount: options.retryCount || 5,
+    this.#axios = Axios.create();
+    axiosCachePlugin(this.#axios);
+    axiosQueuePlugin(this.#axios);
+    axiosRetryPlugin(this.#axios);
+
+    this.#config = {
+      connectionLimit: config.connectionLimit || 10,
+      retryCount: config.retryCount || 5,
+      timeout: 10_000,
+      ...config,
+
+      onRetry: ({ error, url }) => this.emit('error', { error, url }),
+
+      onProcessQueue: ({ activeSize, finishedSize, queueSize }) => {
+        this.emit('progress', {
+          finishedCount: finishedSize,
+          queuedCount: queueSize + activeSize,
+        });
+      },
+
+      onStartFetching: ({ url }) => this.emit('start', { url }),
+    };
+  }
+
+  /**
+   * @param {string} url
+   * @param {AxiosRequestConfig} config
+   * @return {object}
+   */
+  async get(url, config = {}) {
+    const response = await this.request({ method: 'GET', url, ...config });
+    return response.data;
+  }
+
+  /**
+   * @param {string} url
+   * @param {AxiosRequestConfig} config
+   * @return {Promise<Readable>}
+   */
+  async getStream(url, config = {}) {
+    const response = await this.request({
+      method: 'GET',
+      responseType: 'stream',
+      url,
+      ...config,
+    });
+    return response.data;
+  }
+
+  /**
+   * @param {AxiosRequestConfig} config
+   * @return {Promise<{ headers: object, data: any, status: number }>}
+   */
+  async request(config) {
+    const mergedConfig = {
+      ...this.#config,
+      ...config,
     };
 
-    this.queue = [];
-    this.activeTasks = [];
+    try {
+      const response = await this.#axios.request(mergedConfig);
 
-    this.cache = {};
-
-    this.finishedCount = 0;
-  }
-
-  /**
-   * @param {string} url
-   * @return {Promise<object>}
-   */
-  getJson(url) {
-    return this.addTask(url, () => {
-      return this.get(url).asJson();
-    });
-  }
-
-  /**
-   *
-   * @param {string} url
-   * @param {(response: Response) => Promise<T>} transformer
-   * @return {Promise<T>}
-   * @template T
-   */
-  getUsingTransformer(url, transformer) {
-    return this.addTask(url, () => {
-      return transformer(this.get(url));
-    });
-  }
-
-  /**
-   * @return {Promise<Response>}
-   * @private
-   */
-  get(url) {
-    return this.getFunction(url, this.options);
-  }
-
-  /**
-   * @param {string} url
-   * @param {()=> any} fetchFunction
-   * @return {Promise<any>}
-   * @private
-   */
-  addTask(url, fetchFunction) {
-    if (this.cache[url]) {
-      return this.cache[url];
-    }
-
-    const promise = new Promise((resolve, reject) => {
-      this.queue.push(new HttpTask(
-        fetchFunction,
-        url,
-        resolve,
-        reject,
-      ));
-
-      this.next();
-    });
-
-    this.emitQueue();
-
-    this.cache[url] = promise;
-
-    return promise;
-  }
-
-  /**
-   * @private
-   */
-  emitQueue() {
-    this.emit('progress', {
-      finishedCount: this.finishedCount,
-      queuedCount: this.queue.length + this.activeTasks.length,
-    });
-  }
-
-  /**
-   * @param {HttpTask} task
-   * @private
-   */
-  finishTask(task) {
-    this.emit('finish', task);
-    this.finishedCount += 1;
-    this.activeTasks = this.activeTasks.filter((t) => t !== task);
-    this.emitQueue();
-    this.next();
-  }
-
-  /**
-   * @private
-   */
-  next() {
-    if (this.activeTasks.length >= this.options.connectionLimit) {
-      return;
-    }
-
-    const task = this.queue.shift();
-    if (!task) {
-      return;
-    }
-
-    this.activeTasks.push(task);
-    this.runTask(task);
-  }
-
-  /**
-   * @param {HttpTask} task
-   * @private
-   */
-  runTask(task) {
-    if (task.retries >= this.options.retryCount) {
-      task.setRejected();
-      this.finishTask(task);
-      return;
-    }
-
-    this.emit(task.retries > 0 ? 'retry' : 'start', task);
-
-    task.start()
-      .then((response) => {
-        task.setResolved(response);
-        this.finishTask(task);
-      })
-      .catch((e) => {
-        task.addError(e);
-        this.emit('error', task);
-        this.runTask(task);
+      this.emit('finish', {
+        response: response.data,
+        status: response.status,
+        url: config.url,
       });
+
+      return {
+        data: response.data,
+        headers: response.headers,
+        status: response.status,
+      };
+    } catch (error) {
+      this.emit('error', {
+        error,
+        url: config.url,
+      });
+      throw error;
+    }
   }
 }
 

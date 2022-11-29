@@ -8,17 +8,21 @@ const NpmFetcher = require('./fetchers/NpmFetcher');
 const Package = require('./Package');
 
 class PackageFactory {
+  #fetchers = {};
+
   /**
-   * @param {HttpClient} httpClient
-   * @param {GetTarballStats} getTarballStats
+   * @param {object} options
+   * @param {HttpClient} options.httpClient
+   * @param {string} [options.registryUrl]
+   * @param {TarballReader} options.tarballReader
    */
-  constructor(httpClient, getTarballStats) {
-    this.fetchers = {
+  constructor({ httpClient, registryUrl, tarballReader }) {
+    this.#fetchers = {
       directory: new DirectoryFetcher(),
       git: new GitFetcher(),
-      github: new GithubFetcher(httpClient, getTarballStats),
-      http: new HttpFetcher(httpClient, getTarballStats),
-      npm: new NpmFetcher(httpClient, getTarballStats),
+      github: new GithubFetcher({ tarballReader }),
+      http: new HttpFetcher({ tarballReader }),
+      npm: new NpmFetcher({ httpClient, registryUrl, tarballReader }),
     };
   }
 
@@ -30,8 +34,8 @@ class PackageFactory {
     const pkg = new Package(dependencySpec.name, dependencySpec.versionSpec);
     const source = dependencySpec.source;
 
-    if (this.fetchers[source]) {
-      return this.fetchers[source].fetch(pkg, dependencySpec);
+    if (this.#fetchers[source]) {
+      return this.#fetchers[source].fetch(pkg, dependencySpec);
     }
 
     throw new Error(

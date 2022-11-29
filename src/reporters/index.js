@@ -14,7 +14,7 @@ module.exports = {
  */
 function createReporter(options = {}) {
   // eslint-disable-next-line no-console
-  options = { printer: console.log, ...options };
+  options = { printer: console.info, ...options };
 
   switch (options.name) {
     case 'table': return new Table(options);

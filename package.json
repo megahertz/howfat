@@ -7,7 +7,7 @@
   "scripts": {
     "test": "humile src",
     "test:e2e": "humile e2e",
-    "test:full": "npm test && npm run lint && npm test:e2e",
+    "test:full": "npm test && npm run lint && npm run test:e2e",
     "lint": "eslint src",
     "postversion": "npm run test:full && git push && git push --tags",
     "prepack": "npm run test:full"

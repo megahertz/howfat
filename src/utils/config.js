@@ -19,7 +19,9 @@ function getConfig() {
       -r, --reporter STRING            'default', 'table', 'tree'
       -v, --verbose BOOLEAN            Show additional logs
           --no-colors BOOLEAN          Prevent color output
-          --no-human-readable BOOLEAN  Show size in bytes 
+          --no-human-readable BOOLEAN  Show size in bytes
+          
+      --registry-url STRING            Default to https://registry.npmjs.org/
       
       --http                           Node.js RequestOptions, like:
       --http.timeout NUMBER            Request timeout in ms, default 10000
@@ -36,7 +38,7 @@ function getConfig() {
 
 class Config {
   /**
-   * @param {packageOptions.PackageOptions} opts
+   * @param {PackageOptions} opts
    */
   constructor(opts) {
     this.dependencyTypeFilter = {
@@ -60,6 +62,8 @@ class Config {
       shortSize: opts.humanReadable !== false,
       useColors: opts.colors !== false,
     };
+
+    this.registryUrl = opts.registryUrl || 'https://registry.npmjs.org/';
 
     this.isVerbose = opts.verbose || false;
 

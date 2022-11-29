@@ -3,14 +3,16 @@
 const Fetcher = require('./Fetcher');
 
 class HttpFetcher extends Fetcher {
+  /** @type {TarballReader} */
+  tarballReader;
+
   /**
-   * @param {HttpClient} httpClient
-   * @param {GetTarballStats} getTarballStats
+   * @param {object} options
+   * @param {TarballReader} options.tarballReader
    */
-  constructor(httpClient, getTarballStats) {
+  constructor({ tarballReader }) {
     super();
-    this.httpClient = httpClient;
-    this.getTarballStats = getTarballStats;
+    this.tarballReader = tarballReader;
   }
 
   /**
@@ -19,7 +21,7 @@ class HttpFetcher extends Fetcher {
    * @return {Promise<Package>}
    */
   async fetch(pkg, { versionSpec }) {
-    const stats = await this.getTarballStats(versionSpec, this.httpClient);
+    const stats = await this.tarballReader.readUrl(versionSpec);
     this.updatePackageByStats(pkg, stats);
     return pkg;
   }

@@ -7,14 +7,30 @@ const {
 const Fetcher = require('./Fetcher');
 
 class NpmFetcher extends Fetcher {
+  /** @type {HttpClient} */
+  #httpClient;
+
+  /** @type {string} */
+  #registryUrl;
+
+  /** @type {TarballReader} */
+  #tarballReader;
+
   /**
-   * @param {HttpClient} httpClient
-   * @param {GetTarballStats} getTarballStats
+   * @param {object} options
+   * @param {HttpClient} options.httpClient
+   * @param {string} options.registryUrl
+   * @param {TarballReader} options.tarballReader
    */
-  constructor(httpClient, getTarballStats) {
+  constructor({
+    httpClient,
+    registryUrl = 'https://registry.npmjs.org/',
+    tarballReader,
+  }) {
     super();
-    this.httpClient = httpClient;
-    this.getTarballStats = getTarballStats;
+    this.#httpClient = httpClient;
+    this.#registryUrl = registryUrl;
+    this.#tarballReader = tarballReader;
   }
 
   /**
@@ -23,8 +39,8 @@ class NpmFetcher extends Fetcher {
    * @return {Promise<Package>}
    */
   async fetch(pkg, { escapedName }) {
-    const packageMetaUrl = 'http://registry.npmjs.org/' + escapedName;
-    const packageFullMeta = await this.httpClient.getJson(packageMetaUrl);
+    const packageMetaUrl = this.#registryUrl + escapedName;
+    const packageFullMeta = await this.#httpClient.get(packageMetaUrl);
 
     pkg.version = this.extractVersion(pkg, packageFullMeta);
 
@@ -48,7 +64,7 @@ class NpmFetcher extends Fetcher {
    */
   async fetchStats(url) {
     if (url) {
-      return this.getTarballStats(url, this.httpClient);
+      return this.#tarballReader.readUrl(url);
     }
 
     return { fileCount: 0, unpackedSize: 0 };

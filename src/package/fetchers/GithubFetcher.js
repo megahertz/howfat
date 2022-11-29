@@ -9,9 +9,8 @@ class GithubFetcher extends HttpFetcher {
    * @return {Promise<Package>}
    */
   async fetch(pkg, { escapedName, versionSpec }) {
-    const stats = await this.getTarballStats(
+    const stats = await this.tarballReader.readUrl(
       `https://codeload.github.com/${escapedName}/tar.gz/${versionSpec}`,
-      this.httpClient,
     );
 
     this.updatePackageByStats(pkg, stats);

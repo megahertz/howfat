@@ -15,6 +15,9 @@ module.exports = {
   rules: {
     'arrow-body-style': 'off',
     'class-methods-use-this': 'off',
+    'lines-between-class-members': ['error', 'always', {
+      exceptAfterSingleLine: true,
+    }],
     'max-classes-per-file': 'off',
     'max-len': ['error', { code: 80 }],
     'no-continue': 'off',
