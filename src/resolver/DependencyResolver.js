@@ -4,6 +4,18 @@ const { isRightPlatform } = require('../utils/spec');
 const graph = require('../dependency/graph');
 
 class DependencyResolver {
+  /** @type {PackageFactory} */
+  packageFactory;
+
+  /** @type {DependencyFactory} */
+  dependencyFactory;
+
+  /** @type {DependencyTypeFilter} */
+  typeFilter;
+
+  /** @type {DependencyCache} */
+  cache;
+
   /**
    * @param {PackageFactory} packageFactory
    * @param {DependencyFactory} dependencyFactory

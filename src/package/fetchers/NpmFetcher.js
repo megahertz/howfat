@@ -40,7 +40,23 @@ class NpmFetcher extends Fetcher {
    */
   async fetch(pkg, { escapedName }) {
     const packageMetaUrl = this.#registryUrl + escapedName;
-    const packageFullMeta = await this.#httpClient.get(packageMetaUrl);
+    let packageFullMeta;
+
+    try {
+      packageFullMeta = await this.#httpClient.get(packageMetaUrl);
+    } catch (error) {
+      if (error.response.status === 404) {
+        pkg.setError({
+          error,
+          reason: 'not-found',
+          message: 'Package not found',
+        });
+
+        return pkg;
+      }
+
+      throw error;
+    }
 
     pkg.version = this.extractVersion(pkg, packageFullMeta);
 

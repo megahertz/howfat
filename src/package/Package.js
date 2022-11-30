@@ -1,39 +1,50 @@
 'use strict';
 
 class Package {
+  /** @type {string} */
+  name;
+
+  /** @type {string} */
+  version;
+
+  /** @type {string} */
+  versionSpec;
+
+  /** @type {string} */
+  localPath;
+
+  dependencies = {
+    dev: {},
+    normal: {},
+    optional: {},
+    regular: {},
+  };
+
+  stats = {
+    fileCount: -1,
+    unpackedSize: -1,
+  };
+
+  requirements = {
+    arch: undefined,
+    platform: undefined,
+  };
+
+  error = {
+    error: null,
+    message: '',
+
+    /** @type {'none' | 'not-found'} */
+    reason: 'none',
+  };
+
   /**
    * @param {string} name
    * @param {string} versionSpec
    */
   constructor(name, versionSpec) {
     this.name = name;
-    /**
-     * @type {?string}
-     */
-    this.version = undefined;
     this.versionSpec = versionSpec;
-
-    /**
-     * @type {?string}
-     */
-    this.localPath = undefined;
-
-    this.dependencies = {
-      dev: {},
-      normal: {},
-      optional: {},
-      regular: {},
-    };
-
-    this.stats = {
-      fileCount: -1,
-      unpackedSize: -1,
-    };
-
-    this.requirements = {
-      arch: undefined,
-      platform: undefined,
-    };
   }
 
   /**
@@ -68,6 +79,10 @@ class Package {
 
   hasStats() {
     return this.stats.fileCount > -1 && this.stats.unpackedSize > -1;
+  }
+
+  setError({ error, message, reason }) {
+    this.error = { error, message, reason };
   }
 
   toString() {

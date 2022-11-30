@@ -31,6 +31,14 @@ class Dependency {
     return Array.from(graph.flat(this));
   }
 
+  getError() {
+    return {
+      error: null,
+      message: '',
+      reason: 'none',
+    };
+  }
+
   getLabel() {
     return '';
   }

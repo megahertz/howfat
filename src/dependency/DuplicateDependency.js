@@ -7,6 +7,10 @@ class DuplicateDependency extends RealDependency {
     return this.original ? this.original.version : null;
   }
 
+  getError() {
+    return this.original ? this.original.getError() : super.getError();
+  }
+
   getLabel() {
     return 'duplicate';
   }

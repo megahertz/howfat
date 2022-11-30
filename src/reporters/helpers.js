@@ -11,6 +11,11 @@ const LABEL_MAP = {
   unmet: 'UNMET',
 };
 
+const COLORS = {
+  gray: '\x1b[90m',
+  red: '\x1b[31m',
+};
+
 function formatSize(bytes) {
   if (bytes === 0) return '0b';
   const e = Math.floor(Math.log(bytes) / Math.log(1024));
@@ -29,8 +34,13 @@ function formatSize(bytes) {
 function formatStats(dependency, options) {
   const stats = dependency.getStatsRecursive();
   const results = [];
-  const label = dependency.getLabel();
 
+  const error = dependency.getError();
+  if (error.reason !== 'none') {
+    results.push(COLORS.red + error.message + COLORS.gray);
+  }
+
+  const label = dependency.getLabel();
   if (label && LABEL_MAP[label]) {
     results.push(LABEL_MAP[label]);
   }
@@ -65,5 +75,5 @@ function colorGray(text, useColors = process.stdout.isTTY) {
     return text;
   }
 
-  return '\x1b[90m' + text + '\x1b[0m';
+  return COLORS.gray + text + '\x1b[0m';
 }

@@ -70,6 +70,10 @@ class RealDependency extends Dependency {
     this.onLoadDependencies.handler();
   }
 
+  getError() {
+    return this.package.error;
+  }
+
   /**
    * @param {Package} pkg
    */
