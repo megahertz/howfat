@@ -4,6 +4,16 @@ module.exports = {
   colorGray,
   formatSize,
   formatStats,
+
+  getFieldNameByAlias(alias) {
+    return FIELD_ALIASES[alias] || alias;
+  },
+};
+
+const FIELD_ALIASES = {
+  dependencies: 'dependencyCount',
+  files: 'fileCount',
+  size: 'unpackedSize',
 };
 
 const LABEL_MAP = {
@@ -26,7 +36,7 @@ function formatSize(bytes) {
 
 /**
  * @param {Dependency} dependency
- * @param {ReporterOptions} options
+ * @param {Required<ReporterOptions>} options
  * @return {string}
  */
 function formatStats(dependency, options) {
@@ -43,13 +53,10 @@ function formatStats(dependency, options) {
     results.push(LABEL_MAP[label]);
   }
 
-  (options.fields || 'dependencies,size,files,license')
-    .split(',')
-    .map((f) => f?.trim())
-    .filter(Boolean)
+  options.fields
     .forEach((field) => {
       switch (field) {
-        case 'dependencies': {
+        case 'dependencyCount': {
           if (stats.dependencyCount > 0) {
             const count = stats.dependencyCount;
             results.push(`${count} dep${count === 1 ? '' : 's'}`);
@@ -57,7 +64,7 @@ function formatStats(dependency, options) {
           break;
         }
 
-        case 'size': {
+        case 'unpackedSize': {
           if (stats.unpackedSize > 0) {
             if (options.shortSize) {
               results.push(formatSize(stats.unpackedSize));
@@ -68,7 +75,7 @@ function formatStats(dependency, options) {
           break;
         }
 
-        case 'files': {
+        case 'fileCount': {
           if (stats.fileCount > 0) {
             const count = stats.fileCount;
             results.push(`${count} file${count === 1 ? '' : 's'}`);
@@ -84,7 +91,7 @@ function formatStats(dependency, options) {
         }
 
         default:
-          results.push(dependency.getField(field) || 'field');
+          results.push(dependency.getField(field) || field);
       }
     });
 

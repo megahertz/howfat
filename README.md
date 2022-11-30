@@ -59,12 +59,12 @@ mkdirp@0.5.1 (1 dep, 41.49kb, 37 files)
   -d, --dev-dependencies BOOLEAN   Fetch dev dependencies, default false
   -p, --peer-dependencies BOOLEAN  Fetch peer dependencies, default false
   
-  -r, --reporter STRING            'simple', 'table', 'tree'
+  -r, --reporter STRING            'default', 'table', 'tree'
       --fields STRING              Displayed fields separated by a comma:
                                    dependencies,size,files,license,
                                    author,description,maintainers,time
-                                   
-      --sort STRING                Default to 'size'
+      --sort STRING                Sort field. Add minus sign for 
+                                   desc order, like size-. Default to 'name'
   -v, --verbose BOOLEAN            Show additional logs
       --no-colors BOOLEAN          Prevent color output
       --no-human-readable BOOLEAN  Show size in bytes

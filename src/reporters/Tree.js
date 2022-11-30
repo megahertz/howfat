@@ -1,13 +1,13 @@
 'use strict';
 
-const Default = require('./Simple');
+const BaseReporter = require('./BaseReporter');
 const { formatStats } = require('./helpers');
 
 const FIRST = 0;
 const NORMAL = 1;
 const LAST = 2;
 
-class Tree extends Default {
+class Tree extends BaseReporter {
   /**
    * @param {Dependency} dependency
    */
@@ -17,10 +17,10 @@ class Tree extends Default {
       return;
     }
 
-    dependency.children.forEach((dep, i, deps) => {
+    dependency.children.sort(this.sortDependencies).forEach((dep, i, deps) => {
       this.draw(dep, '', FIRST);
       if (i < deps.length - 1) {
-        this.printer('');
+        this.options.printer('');
       }
     });
   }
@@ -43,13 +43,30 @@ class Tree extends Default {
       childPrefix = '';
     }
 
-    this.printer(
+    this.options.printer(
       selfPrefix + dependency + formatStats(dependency, this.options),
     );
 
-    dependencies.forEach((dep, i, deps) => {
+    dependencies.sort(this.sortDependencies).forEach((dep, i, deps) => {
       this.draw(dep, childPrefix, i >= deps.length - 1 ? LAST : NORMAL);
     });
+  }
+
+  /**
+   * @param {Dependency} a
+   * @param {Dependency} b
+   */
+  sortDependencies(a, b) {
+    const sort = this.options.sort;
+
+    if (['dependencyCount', 'fileCount', 'unpackedSize'].includes(sort)) {
+      return super.sortDependencies(
+        a.getStatsRecursive(),
+        b.getStatsRecursive(),
+      );
+    }
+
+    return super.sortDependencies(a, b);
   }
 }
 

@@ -1,6 +1,6 @@
 'use strict';
 
-const Default = require('./Simple');
+const BaseReporter = require('./BaseReporter');
 const { colorGray, formatSize, formatStats } = require('./helpers');
 
 const COLUMNS = [
@@ -15,7 +15,7 @@ const COLUMNS = [
   { id: 'fileCount', alias: 'files', title: 'Files', alignRight: true },
 ];
 
-class Table extends Default {
+class Table extends BaseReporter {
   /**
    * @param {Dependency} dependency
    */
@@ -35,7 +35,9 @@ class Table extends Default {
    * @private
    */
   draw(dependency) {
-    this.printer(dependency.toString() + formatStats(dependency, this.options));
+    this.options.printer(
+      dependency.toString() + formatStats(dependency, this.options),
+    );
 
     const rows = dependency.children
       .map((child) => {
@@ -45,47 +47,33 @@ class Table extends Default {
           name: child.toString(),
         };
       })
-      .sort((a, b) => {
-        let sort = this.options.sort;
-        const column = COLUMNS.find((c) => c.alias === sort);
-        if (column?.id) {
-          sort = column.id;
-        }
-
-        return b[sort] - a[sort];
-      })
+      .sort(this.sortDependencies)
       .map((row) => {
-        let size = row.unpackedSize;
-        if (this.shortSize) {
-          size = formatSize(size);
+        if (this.options.shortSize) {
+          row.unpackedSize = formatSize(row.unpackedSize);
         }
-
-        row.unpackedSize = size;
         return row;
       });
 
     if (rows.length < 1) {
-      this.printer(colorGray('no dependencies', this.colors));
+      this.options.printer(colorGray('no dependencies', this.colors));
       return;
     }
 
-    const columnNames = this.options.fields.split(',')
-      .map((f) => f.trim())
-      .filter(Boolean);
-
+    const columnNames = [...this.options.fields];
     if (!columnNames.includes('name')) {
       columnNames.unshift('name');
     }
 
     const columns = columnNames.map((name) => {
-      const column = COLUMNS.find((c) => c.alias === name || c.id === name);
+      const column = COLUMNS.find((c) => c.id === name);
       return column || {
         id: name,
         title: name[0].toUpperCase() + name.slice(1),
       };
     });
 
-    printTable(columns, rows, this.printer);
+    printTable(columns, rows, this.options.printer);
   }
 }
 

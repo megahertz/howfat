@@ -20,8 +20,8 @@ function getConfig() {
           --fields STRING              Displayed fields separated by a comma:
                                        dependencies,size,files,license,
                                        author,description,maintainers,time
-                                       
-          --sort STRING                Default to 'size'
+          --sort STRING                Sort field. Add minus sign for 
+                                       desc order, like size-. Default to 'name'
       -v, --verbose BOOLEAN            Show additional logs
           --no-colors BOOLEAN          Prevent color output
           --no-human-readable BOOLEAN  Show size in bytes
@@ -68,8 +68,10 @@ class Config {
       name: opts.reporter || 'tree',
       fields: opts.fields || 'dependencies,size,files,license',
       shortSize: opts.humanReadable !== false,
-      sort: opts.sort || 'size',
-      useColors: opts.colors !== false,
+      sort: opts.sort || 'size-',
+      useColors: typeof opts.colors === 'boolean'
+        ? opts.colors
+        : process.stdout.isTTY,
     };
 
     this.registryUrl = opts.registryUrl || 'https://registry.npmjs.org/';

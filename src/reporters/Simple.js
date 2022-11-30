@@ -1,24 +1,9 @@
 'use strict';
 
 const { formatSize } = require('./helpers');
+const BaseReporter = require('./BaseReporter');
 
-class Simple {
-  /** @type {ReporterOptions} */
-  options;
-
-  /**
-   * @param {ReporterOptions} options
-   */
-  constructor(options) {
-    this.options = options;
-    this.printer = options.printer;
-    this.shortSize = options.shortSize !== false;
-    this.useColors = options.useColors;
-    if (this.useColors === undefined) {
-      this.useColors = process.stdout.isTTY;
-    }
-  }
-
+class Simple extends BaseReporter {
   /**
    * @param {Dependency} dependency
    */
@@ -26,13 +11,13 @@ class Simple {
     const stats = dependency.getStatsRecursive();
 
     let size = stats.unpackedSize;
-    if (this.shortSize) {
+    if (this.options.shortSize) {
       size = formatSize(size);
     }
 
-    this.printer('Dependencies:', stats.dependencyCount);
-    this.printer('Size:', size);
-    this.printer('Files:', stats.fileCount);
+    this.options.printer('Dependencies:', stats.dependencyCount);
+    this.options.printer('Size:', size);
+    this.options.printer('Files:', stats.fileCount);
   }
 }
 
