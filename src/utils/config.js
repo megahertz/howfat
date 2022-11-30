@@ -27,6 +27,7 @@ function getConfig() {
       --http.timeout NUMBER            Request timeout in ms, default 10000
       --http.connection-limit NUMBER   Max simultaneous connections, default 10
       --http.retry-count NUMBER        Try to fetch again of failure, default 5
+      --http.proxy STRING              A proxy server url
       
       --show-config                    Show the current configuration
       --version                        Show howfat version
@@ -51,6 +52,7 @@ class Config {
       ...http,
       connectionLimit: http.connectionLimit || 10,
       timeout: http.timeout || 10000,
+      proxy: http.proxy || '',
       retryCount: http.retryCount || 5,
     };
 

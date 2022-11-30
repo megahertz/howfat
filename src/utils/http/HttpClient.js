@@ -28,6 +28,10 @@ class HttpClient extends EventEmitter {
     axiosQueuePlugin(this.#axios);
     axiosRetryPlugin(this.#axios);
 
+    if (typeof config.proxy === 'string' && !process.env.HTTPS_PROXY) {
+      process.env.HTTPS_PROXY = config.proxy;
+    }
+
     this.#config = {
       connectionLimit: config.connectionLimit || 10,
       retryCount: config.retryCount || 5,

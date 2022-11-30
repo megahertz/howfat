@@ -62,12 +62,19 @@ mkdirp@0.5.1 (1 dep, 41.49kb, 37 files)
   -r, --reporter STRING            'default', 'table', 'tree'
   -v, --verbose BOOLEAN            Show additional logs
       --no-colors BOOLEAN          Prevent color output
-      --no-human-readable BOOLEAN  Show size in bytes 
+      --no-human-readable BOOLEAN  Show size in bytes
+      
+  --registry-url STRING            Default to https://registry.npmjs.org/
   
   --http                           Node.js RequestOptions, like:
   --http.timeout NUMBER            Request timeout in ms, default 10000
   --http.connection-limit NUMBER   Max simultaneous connections, default 10
   --http.retry-count NUMBER        Try to fetch again of failure, default 5
+  --http.proxy STRING              A proxy server url
+  
+  --show-config                    Show the current configuration
+  --version                        Show howfat version
+  --help                           Show this help
 ```
 
 ## Accuracy
