@@ -27,7 +27,7 @@ class BaseReporter {
    * @return {Required<ReporterOptions> & { sortAsc: boolean }}}
    */
   normalizeOptions(options) {
-    const sort = options.sort || 'size-';
+    const sort = options.sort || 'name';
 
     const fields = (options.fields || 'dependencies,size,files,license')
       .split(',')

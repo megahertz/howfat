@@ -69,7 +69,7 @@ class Config {
       name: opts.reporter || 'tree',
       fields: opts.fields || 'dependencies,size,files,license,deprec',
       shortSize: opts.humanReadable !== false,
-      sort: opts.sort || 'size-',
+      sort: opts.sort || 'name',
       useColors: typeof opts.colors === 'boolean'
         ? opts.colors
         : process.stdout.isTTY,
