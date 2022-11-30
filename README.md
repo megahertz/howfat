@@ -33,18 +33,19 @@ Git or github
 
 ### Different reporters
 
-Show all dependencies as a tree:
+Just show a simple stats:
 
 ```
-$ npx howfat -r tree mkdirp
-mkdirp@0.5.1 (1 dep, 41.49kb, 37 files)
-╰── minimist@0.0.8 (20.78kb, 14 files)
+$ npx howfat -r simple mkdirp@0.5.1
+Dependencies: 1
+Size: 41.49kb
+Files: 37
 ```
 
 as a table:
 
 ```
-$ npx howfat -r table mkdirp
+$ npx howfat -r table mkdirp@0.5.1
 mkdirp@0.5.1 (1 dep, 41.49kb, 37 files)
 ╭────────────────┬──────────────┬─────────┬───────╮
 │ Name           │ Dependencies │    Size │ Files │
