@@ -30,6 +30,7 @@ class Package {
 
   requirements = {
     arch: undefined,
+    node: undefined,
     platform: undefined,
   };
 

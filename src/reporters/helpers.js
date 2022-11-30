@@ -24,6 +24,7 @@ const LABEL_MAP = {
 const COLORS = {
   gray: '\x1b[90m',
   red: '\x1b[31m',
+  reset: '\x1b[0m',
 };
 
 function formatSize(bytes) {
@@ -45,7 +46,7 @@ function formatStats(dependency, options) {
 
   const error = dependency.getError();
   if (error.reason !== 'none') {
-    results.push(COLORS.red + error.message + COLORS.gray);
+    results.push(colorRed(error.message, options.useColors));
   }
 
   const label = dependency.getLabel();
@@ -64,13 +65,26 @@ function formatStats(dependency, options) {
           break;
         }
 
-        case 'unpackedSize': {
-          if (stats.unpackedSize > 0) {
-            if (options.shortSize) {
-              results.push(formatSize(stats.unpackedSize));
-            } else {
-              results.push(stats.unpackedSize);
+        case 'deprec': {
+          const deprecated = dependency.getField('deprecated');
+          if (deprecated) {
+            let short = deprecated.slice(0, 35);
+            if (short.length < deprecated.length) {
+              short += '…';
             }
+            results.push(
+              colorRed(`⛔ ${short}`, options.useColors),
+            );
+          }
+          break;
+        }
+
+        case 'deprecated': {
+          const deprecated = dependency.getField('deprecated');
+          if (deprecated) {
+            results.push(
+              colorRed(`Deprecated: ${deprecated}`, options.useColors),
+            );
           }
           break;
         }
@@ -90,8 +104,20 @@ function formatStats(dependency, options) {
           break;
         }
 
-        default:
-          results.push(dependency.getField(field) || field);
+        case 'unpackedSize': {
+          if (stats.unpackedSize > 0) {
+            if (options.shortSize) {
+              results.push(formatSize(stats.unpackedSize));
+            } else {
+              results.push(stats.unpackedSize);
+            }
+          }
+          break;
+        }
+
+        default: {
+          results.push(dependency.getField(field));
+        }
       }
     });
 
@@ -107,10 +133,18 @@ function formatStats(dependency, options) {
   return colorGray(` (${resultsString})`, options.useColors);
 }
 
-function colorGray(text, useColors = process.stdout.isTTY) {
+function colorGray(text, useColors) {
   if (!useColors) {
     return text;
   }
 
-  return COLORS.gray + text + '\x1b[0m';
+  return COLORS.gray + text + COLORS.reset;
+}
+
+function colorRed(text, useColors, endColor = COLORS.gray) {
+  if (!useColors) {
+    return text;
+  }
+
+  return COLORS.red + text + endColor;
 }

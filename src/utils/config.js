@@ -19,7 +19,8 @@ function getConfig() {
       -r, --reporter STRING            'default', 'table', 'tree'
           --fields STRING              Displayed fields separated by a comma:
                                        dependencies,size,files,license,
-                                       author,description,maintainers,time
+                                       author,description,maintainers,deprec,
+                                       deprecated,node,os,platform
           --sort STRING                Sort field. Add minus sign for 
                                        desc order, like size-. Default to 'name'
       -v, --verbose BOOLEAN            Show additional logs
@@ -66,7 +67,7 @@ class Config {
      */
     this.reporterOptions = {
       name: opts.reporter || 'tree',
-      fields: opts.fields || 'dependencies,size,files,license',
+      fields: opts.fields || 'dependencies,size,files,license,deprec',
       shortSize: opts.humanReadable !== false,
       sort: opts.sort || 'size-',
       useColors: typeof opts.colors === 'boolean'

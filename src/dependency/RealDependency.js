@@ -75,7 +75,10 @@ class RealDependency extends Dependency {
   }
 
   getFields() {
-    return this.package?.fields || {};
+    return {
+      ...this.package?.requirements,
+      ...this.package?.fields,
+    };
   }
 
   /**

@@ -6,7 +6,13 @@ const {
 } = require('../../utils/spec');
 const Fetcher = require('./Fetcher');
 
-const META_FIELDS = ['author', 'description', 'license', 'maintainers', 'time'];
+const META_FIELDS = [
+  'author',
+  'deprecated',
+  'description',
+  'license',
+  'maintainers',
+];
 
 class NpmFetcher extends Fetcher {
   /** @type {HttpClient} */
@@ -69,8 +75,8 @@ class NpmFetcher extends Fetcher {
     pkg.requirements = this.extractRequirements(packageJson);
 
     for (const f of META_FIELDS) {
-      pkg.fields[f] = JSON.stringify(packageFullMeta[f] || '')
-        .replace(/"/g, '');
+      const value = JSON.stringify(packageFullMeta[f] || packageJson[f]);
+      pkg.fields[f] = (value || '').replace(/"/g, '');
     }
 
     if (!pkg.hasStats()) {

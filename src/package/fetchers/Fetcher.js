@@ -37,12 +37,13 @@ class Fetcher {
 
   /**
    * @param {object} packageJson
-   * @return {{ arch: ?string, platform: ?string }}
+   * @return {{ arch: ?string, node: ?string, platform: ?string }}
    * @protected
    */
   extractRequirements(packageJson) {
     return {
-      arch: packageJson.cpu,
+      arch: packageJson?.cpu,
+      node: packageJson?.engines?.node,
       platform: packageJson.os,
     };
   }
