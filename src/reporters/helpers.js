@@ -43,8 +43,9 @@ function formatStats(dependency, options) {
     results.push(LABEL_MAP[label]);
   }
 
-  options.fields.split(',')
-    .map((f) => f.trim())
+  (options.fields || 'dependencies,size,files,license')
+    .split(',')
+    .map((f) => f?.trim())
     .filter(Boolean)
     .forEach((field) => {
       switch (field) {
@@ -91,7 +92,10 @@ function formatStats(dependency, options) {
     return '';
   }
 
-  const resultsString = results.map((f) => f.trim()).filter(Boolean).join(', ');
+  const resultsString = results
+    .map((f) => f.toString().trim())
+    .filter(Boolean)
+    .join(', ');
 
   return colorGray(` (${resultsString})`, options.useColors);
 }
