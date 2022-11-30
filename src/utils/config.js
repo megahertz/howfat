@@ -17,12 +17,17 @@ function getConfig() {
       -p, --peer-dependencies BOOLEAN  Fetch peer dependencies, default false
       
       -r, --reporter STRING            'default', 'table', 'tree'
+          --fields STRING              Displayed fields separated by a comma:
+                                       dependencies,size,files,license,
+                                       author,description,maintainers,time
+                                       
+          --sort STRING                Default to 'size'
       -v, --verbose BOOLEAN            Show additional logs
           --no-colors BOOLEAN          Prevent color output
           --no-human-readable BOOLEAN  Show size in bytes
           
       --registry-url STRING            Default to https://registry.npmjs.org/
-      
+                                
       --http                           Node.js RequestOptions, like:
       --http.timeout NUMBER            Request timeout in ms, default 10000
       --http.connection-limit NUMBER   Max simultaneous connections, default 10
@@ -61,7 +66,9 @@ class Config {
      */
     this.reporterOptions = {
       name: opts.reporter || 'tree',
+      fields: opts.fields || 'dependencies,size,files,license',
       shortSize: opts.humanReadable !== false,
+      sort: opts.sort || 'size',
       useColors: opts.colors !== false,
     };
 

@@ -43,6 +43,14 @@ class Dependency {
     return '';
   }
 
+  getField(name) {
+    return this.getFields()[name];
+  }
+
+  getFields() {
+    return {};
+  }
+
   getOriginal() {
     return this;
   }

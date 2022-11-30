@@ -44,10 +44,7 @@ class Tree extends Default {
     }
 
     this.printer(
-      selfPrefix + dependency + formatStats(dependency, {
-        shortSize: this.shortSize,
-        useColors: this.useColors,
-      }),
+      selfPrefix + dependency + formatStats(dependency, this.options),
     );
 
     dependencies.forEach((dep, i, deps) => {

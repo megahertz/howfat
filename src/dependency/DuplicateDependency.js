@@ -15,6 +15,10 @@ class DuplicateDependency extends RealDependency {
     return 'duplicate';
   }
 
+  getFields() {
+    return this.original ? this.original.getFields() : super.getFields();
+  }
+
   /**
    * @param {Dependency} dependency
    * @return {this}

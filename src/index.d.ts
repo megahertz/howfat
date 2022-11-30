@@ -35,7 +35,9 @@ export type ProgressIndicatorType = 'url' | 'stat'
 
 export interface ReporterOptions {
   name?: string;
+  fields?: string;
   shortSize?: boolean;
+  sort?: string;
   useColors?: boolean;
   printer?(...args: string[]);
 }

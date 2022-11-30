@@ -10,6 +10,9 @@ class Package {
   /** @type {string} */
   versionSpec;
 
+  /** @type {Record<string, string>} */
+  fields = {};
+
   /** @type {string} */
   localPath;
 

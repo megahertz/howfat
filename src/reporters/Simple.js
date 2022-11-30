@@ -3,10 +3,14 @@
 const { formatSize } = require('./helpers');
 
 class Simple {
+  /** @type {ReporterOptions} */
+  options;
+
   /**
    * @param {ReporterOptions} options
    */
   constructor(options) {
+    this.options = options;
     this.printer = options.printer;
     this.shortSize = options.shortSize !== false;
     this.useColors = options.useColors;

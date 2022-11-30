@@ -74,6 +74,10 @@ class RealDependency extends Dependency {
     return this.package.error;
   }
 
+  getFields() {
+    return this.package?.fields || {};
+  }
+
   /**
    * @param {Package} pkg
    */

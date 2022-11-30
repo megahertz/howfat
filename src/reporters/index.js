@@ -1,6 +1,6 @@
 'use strict';
 
-const Default = require('./Simple');
+const Simple = require('./Simple');
 const Table = require('./Table');
 const Tree = require('./Tree');
 
@@ -10,15 +10,15 @@ module.exports = {
 
 /**
  * @param {ReporterOptions} options
- * @return {Default}
+ * @return {Simple}
  */
 function createReporter(options = {}) {
   // eslint-disable-next-line no-console
   options = { printer: console.info, ...options };
 
   switch (options.name) {
+    case 'simple': return new Simple(options);
     case 'table': return new Table(options);
-    case 'tree': return new Tree(options);
-    default: return new Default(options);
+    default: return new Tree(options);
   }
 }

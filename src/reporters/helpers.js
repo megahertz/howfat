@@ -26,9 +26,7 @@ function formatSize(bytes) {
 
 /**
  * @param {Dependency} dependency
- * @param {object} options
- * @param {boolean} options.shortSize
- * @param {boolean} options.useColors
+ * @param {ReporterOptions} options
  * @return {string}
  */
 function formatStats(dependency, options) {
@@ -45,29 +43,57 @@ function formatStats(dependency, options) {
     results.push(LABEL_MAP[label]);
   }
 
-  if (stats.dependencyCount > 0) {
-    const count = stats.dependencyCount;
-    results.push(`${count} dep${count === 1 ? '' : 's'}`);
-  }
+  options.fields.split(',')
+    .map((f) => f.trim())
+    .filter(Boolean)
+    .forEach((field) => {
+      switch (field) {
+        case 'dependencies': {
+          if (stats.dependencyCount > 0) {
+            const count = stats.dependencyCount;
+            results.push(`${count} dep${count === 1 ? '' : 's'}`);
+          }
+          break;
+        }
 
-  if (stats.unpackedSize > 0) {
-    if (options.shortSize) {
-      results.push(formatSize(stats.unpackedSize));
-    } else {
-      results.push(stats.unpackedSize);
-    }
-  }
+        case 'size': {
+          if (stats.unpackedSize > 0) {
+            if (options.shortSize) {
+              results.push(formatSize(stats.unpackedSize));
+            } else {
+              results.push(stats.unpackedSize);
+            }
+          }
+          break;
+        }
 
-  if (stats.fileCount > 0) {
-    const count = stats.fileCount;
-    results.push(`${count} file${count === 1 ? '' : 's'}`);
-  }
+        case 'files': {
+          if (stats.fileCount > 0) {
+            const count = stats.fileCount;
+            results.push(`${count} file${count === 1 ? '' : 's'}`);
+          }
+          break;
+        }
+
+        case 'license': {
+          if (dependency.getField('license') !== 'Unknown') {
+            results.push(`©${dependency.getField('license')}`);
+          }
+          break;
+        }
+
+        default:
+          results.push(dependency.getField(field) || 'field');
+      }
+    });
 
   if (results.length < 1) {
     return '';
   }
 
-  return colorGray(' (' + results.join(', ') + ')', options.useColors);
+  const resultsString = results.map((f) => f.trim()).filter(Boolean).join(', ');
+
+  return colorGray(` (${resultsString})`, options.useColors);
 }
 
 function colorGray(text, useColors = process.stdout.isTTY) {
