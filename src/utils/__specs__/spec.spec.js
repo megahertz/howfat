@@ -3,7 +3,7 @@
 const { describe, expect, it } = require('humile');
 const dependencySpec = require('../spec');
 
-describe('utils/dependencySpec', () => {
+describe('utils/spec', () => {
   it('filterReleases', () => {
     const versions = [
       '1.0.0',
