@@ -12,8 +12,14 @@ class Json extends BaseReporter {
       return;
     }
 
+    const children = dependency.children;
+    if (children.length === 1) {
+      this.printJson(this.serializeDependency(children[0]));
+      return;
+    }
+
     this.printJson(
-      dependency.children.map((c) => this.serializeDependency(c)),
+      children.map((c) => this.serializeDependency(c)),
     );
   }
 
