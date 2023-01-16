@@ -39,6 +39,7 @@ export interface ReporterOptions {
   shortSize?: boolean;
   sort?: string;
   sortDesc?: boolean;
+  space?: number | string,
   useColors?: boolean;
   printer?(...args: string[]);
 }

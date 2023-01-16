@@ -54,6 +54,53 @@ mkdirp@0.5.1 (1 dep, 41.49kb, 37 files)
 ╰────────────────┴──────────────┴─────────┴───────╯
 ```
 
+as a json:
+
+`$ npx howfat -r json mkdirp@0.5.1 --space 2`
+```json
+{
+  "package": "mkdirp@0.5.1",
+  "deps": 1,
+  "fileCount": 37,
+  "size": 42486,
+  "duplicate": false,
+  "error": false,
+  "unmet": false,
+  "author": "{name:James Halliday,email:mail@substack.net,url:http://substack.net}",
+  "deprecated": "Legacy versions of mkdirp are no longer supported. Please update to mkdirp 1.x. (Note that the API surface has changed to use Promises in 1.x.)",
+  "description": "Recursively mkdir, like `mkdir -p`",
+  "license": "MIT",
+  "maintainers": "[{name:isaacs,email:i@izs.me}]",
+  "ownStats": {
+    "dependencyCount": 1,
+    "fileCount": 23,
+    "unpackedSize": 21212
+  },
+  "children": [
+    {
+      "package": "minimist@0.0.8",
+      "deps": 0,
+      "fileCount": 14,
+      "size": 21274,
+      "duplicate": false,
+      "error": false,
+      "unmet": false,
+      "author": "{name:James Halliday,email:mail@substack.net,url:http://substack.net}",
+      "deprecated": "",
+      "description": "parse argument options",
+      "license": "MIT",
+      "maintainers": "[{email:ljharb@gmail.com,name:ljharb},{email:github@tixz.dk,name:emilbayes}]",
+      "ownStats": {
+        "dependencyCount": 1,
+        "fileCount": 14,
+        "unpackedSize": 21274
+      },
+      "children": []
+    }
+  ]
+}
+```
+
 ### Other options
 
 ```
@@ -67,6 +114,8 @@ mkdirp@0.5.1 (1 dep, 41.49kb, 37 files)
                                    deprecated,node,os,platform
       --sort STRING                Sort field. Add minus sign for 
                                    desc order, like size-. Default to 'name'
+      --space NUMBER               Use spaces in json output, default null
+                                   
   -v, --verbose BOOLEAN            Show additional logs
       --no-colors BOOLEAN          Prevent color output
       --no-human-readable BOOLEAN  Show size in bytes

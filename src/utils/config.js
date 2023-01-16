@@ -23,6 +23,8 @@ function getConfig() {
                                        deprecated,node,os,platform
           --sort STRING                Sort field. Add minus sign for 
                                        desc order, like size-. Default to 'name'
+          --space NUMBER               Use spaces in json output, default null
+                                       
       -v, --verbose BOOLEAN            Show additional logs
           --no-colors BOOLEAN          Prevent color output
           --no-human-readable BOOLEAN  Show size in bytes
@@ -70,6 +72,7 @@ class Config {
       fields: opts.fields || 'dependencies,size,files,license,deprec',
       shortSize: opts.humanReadable !== false,
       sort: opts.sort || 'name',
+      space: opts.space || null,
       useColors: typeof opts.colors === 'boolean'
         ? opts.colors
         : process.stdout.isTTY,

@@ -1,5 +1,7 @@
 'use strict';
 
+/* eslint-disable max-len */
+
 const { describe, expect, it } = require('humile');
 const Json = require('../Json');
 const { loadFixture } = require('../../__specs__');
@@ -13,16 +15,175 @@ describe('reporters/Json', () => {
     const json = new Json({
       printer: (text) => jsonOutput.push(text),
     });
+
     json.print(graph.getRoot());
 
-    expect(jsonOutput[0]).toEqual('{"npm-package-arg@6.1.1":{"deps":7,"size":'
-      + '"132.23kb","fileCount":47,"hosted-git-info@2.8.5":{"deps":0,'
-      + '"size":"22.73kb","fileCount":7},"osenv@0.1.5":{"deps":2,'
-      + '"size":"10.84kb","fileCount":12,"os-homedir@1.0.2":{"deps":0,'
-      + '"size":"3.08kb","fileCount":4},"os-tmpdir@1.0.2":{"deps":0,'
-      + '"size":"2.98kb","fileCount":4}},"semver@5.7.1":{"deps":0,'
-      + '"size":"60.13kb","fileCount":7},"validate-npm-package-name@3.0.0":{'
-      + '"deps":1,"size":"23.14kb","fileCount":16,"builtins@1.0.3":{"deps":0,'
-      + '"size":"2.63kb","fileCount":7}}}}');
+    const outputJson = JSON.parse(jsonOutput[0]);
+
+    expect(outputJson).toEqual({
+      package: 'npm-package-arg@6.1.1',
+      deps: 7,
+      fileCount: 47,
+      size: 135406,
+      duplicate: false,
+      error: false,
+      ownStats: {
+        dependencyCount: 1,
+        fileCount: 5,
+        unpackedSize: 15759,
+      },
+      unmet: false,
+      author: '{name:Isaac Z. Schlueter,email:i@izs.me,url:http://blog.izs.me/}',
+      deprecated: '',
+      description: 'Parse the things that can be arguments to `npm install`',
+      license: 'ISC',
+      maintainers: '[{email:ruyadorno@hotmail.com,name:ruyadorno},{email:mike@mikecorp.ca,name:mikemimik},{email:billatnpm@gmail.com,name:billatnpm},{email:anne@npmjs.com,name:annekimsey},{email:cghr1990@gmail.com,name:claudiahdz},{email:darcy@darcyclarke.me,name:darcyclarke},{email:evilpacket@gmail.com,name:adam_baldwin},{email:ahmad@ahmadnassri.com,name:ahmadnassri},{email:i@izs.me,name:isaacs}]',
+      children: [
+        {
+          package: 'hosted-git-info@2.8.5',
+          deps: 0,
+          fileCount: 7,
+          size: 23278,
+          duplicate: false,
+          error: false,
+          ownStats: {
+            dependencyCount: 1,
+            fileCount: 7,
+            unpackedSize: 23278,
+          },
+          unmet: false,
+          author: '{name:Rebecca Turner,email:me@re-becca.org,url:http://re-becca.org}',
+          deprecated: '',
+          description: 'Provides metadata and conversions from repository urls for Github, Bitbucket and Gitlab',
+          license: 'ISC',
+          maintainers: '[{email:evilpacket@gmail.com,name:adam_baldwin},{email:ahmad@ahmadnassri.com,name:ahmadnassri},{email:anne@npmjs.com,name:annekimsey},{email:billatnpm@gmail.com,name:billatnpm},{email:cghr1990@gmail.com,name:claudiahdz},{email:darcy@darcyclarke.me,name:darcyclarke},{email:i@izs.me,name:isaacs},{email:mike@mikecorp.ca,name:mikemimik},{email:ruyadorno@hotmail.com,name:ruyadorno}]',
+          children: [],
+        },
+        {
+          package: 'osenv@0.1.5',
+          deps: 2,
+          fileCount: 12,
+          size: 11097,
+          duplicate: false,
+          error: false,
+          ownStats: {
+            dependencyCount: 1,
+            fileCount: 4,
+            unpackedSize: 4889,
+          },
+          unmet: false,
+          author: '{name:Isaac Z. Schlueter,email:i@izs.me,url:http://blog.izs.me/}',
+          deprecated: '',
+          description: 'Look up environment settings specific to different operating systems',
+          license: 'ISC',
+          maintainers: '[{email:ruyadorno@hotmail.com,name:ruyadorno},{email:mike@mikecorp.ca,name:mikemimik},{email:billatnpm@gmail.com,name:billatnpm},{email:anne@npmjs.com,name:annekimsey},{email:cghr1990@gmail.com,name:claudiahdz},{email:darcy@darcyclarke.me,name:darcyclarke},{email:evilpacket@gmail.com,name:adam_baldwin},{email:ahmad@ahmadnassri.com,name:ahmadnassri},{email:i@izs.me,name:isaacs}]',
+          children: [
+            {
+              package: 'os-homedir@1.0.2',
+              deps: 0,
+              fileCount: 4,
+              size: 3152,
+              duplicate: false,
+              error: false,
+              ownStats: {
+                dependencyCount: 1,
+                fileCount: 4,
+                unpackedSize: 3152,
+              },
+              unmet: false,
+              node: '>=0.10.0',
+              author: '{name:Sindre Sorhus,email:sindresorhus@gmail.com,url:sindresorhus.com}',
+              deprecated: '',
+              description: 'Node.js 4 `os.homedir()` ponyfill',
+              license: 'MIT',
+              maintainers: '[{name:sindresorhus,email:sindresorhus@gmail.com}]',
+              children: [],
+            },
+            {
+              package: 'os-tmpdir@1.0.2',
+              deps: 0,
+              fileCount: 4,
+              size: 3056,
+              duplicate: false,
+              error: false,
+              ownStats: {
+                dependencyCount: 1,
+                fileCount: 4,
+                unpackedSize: 3056,
+              },
+              unmet: false,
+              node: '>=0.10.0',
+              author: '{name:Sindre Sorhus,email:sindresorhus@gmail.com,url:sindresorhus.com}',
+              deprecated: '',
+              description: 'Node.js os.tmpdir() ponyfill',
+              license: 'MIT',
+              maintainers: '[{name:sindresorhus,email:sindresorhus@gmail.com}]',
+              children: [],
+            },
+          ],
+        },
+        {
+          package: 'semver@5.7.1',
+          deps: 0,
+          fileCount: 7,
+          size: 61578,
+          duplicate: false,
+          error: false,
+          ownStats: {
+            dependencyCount: 1,
+            fileCount: 7,
+            unpackedSize: 61578,
+          },
+          unmet: false,
+          author: '',
+          deprecated: '',
+          description: 'The semantic version parser used by npm.',
+          license: 'ISC',
+          maintainers: '[{email:ruyadorno@hotmail.com,name:ruyadorno},{email:mike@mikecorp.ca,name:mikemimik},{email:billatnpm@gmail.com,name:billatnpm},{email:anne@npmjs.com,name:annekimsey},{email:cghr1990@gmail.com,name:claudiahdz},{email:darcy@darcyclarke.me,name:darcyclarke},{email:evilpacket@gmail.com,name:adam_baldwin},{email:ahmad@ahmadnassri.com,name:ahmadnassri},{email:i@izs.me,name:isaacs}]',
+          children: [],
+        },
+        {
+          package: 'validate-npm-package-name@3.0.0',
+          deps: 1,
+          fileCount: 16,
+          size: 23694,
+          duplicate: false,
+          error: false,
+          ownStats: {
+            dependencyCount: 1,
+            fileCount: 9,
+            unpackedSize: 20998,
+          },
+          unmet: false,
+          author: '{name:zeke}',
+          deprecated: '',
+          description: "Give me a string and I'll tell you if it's a valid npm package name",
+          license: 'ISC',
+          maintainers: '[{email:ruyadorno@hotmail.com,name:ruyadorno},{email:mike@mikecorp.ca,name:mikemimik},{email:billatnpm@gmail.com,name:billatnpm},{email:anne@npmjs.com,name:annekimsey},{email:cghr1990@gmail.com,name:claudiahdz},{email:darcy@darcyclarke.me,name:darcyclarke},{email:evilpacket@gmail.com,name:adam_baldwin},{email:ahmad@ahmadnassri.com,name:ahmadnassri},{email:i@izs.me,name:isaacs}]',
+          children: [
+            {
+              package: 'builtins@1.0.3',
+              deps: 0,
+              fileCount: 7,
+              size: 2696,
+              duplicate: false,
+              error: false,
+              ownStats: {
+                dependencyCount: 1,
+                fileCount: 7,
+                unpackedSize: 2696,
+              },
+              unmet: false,
+              author: '',
+              deprecated: '',
+              description: 'List of node.js builtin modules',
+              license: 'MIT',
+              maintainers: '[{email:julian@juliangruber.com,name:juliangruber},{email:tools+npm@segment.com,name:segment-admin}]',
+              children: [],
+            },
+          ],
+        },
+      ],
+    });
   });
 });

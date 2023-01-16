@@ -41,6 +41,7 @@ class BaseReporter {
       shortSize: options.shortSize !== false,
       sort: getFieldNameByAlias(sort.replace(/[-+]$/, '')),
       sortDesc: sort.endsWith('-'),
+      space: options.space,
       useColors: options.useColors,
     };
   }

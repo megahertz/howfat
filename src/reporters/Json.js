@@ -1,7 +1,6 @@
 'use strict';
 
 const BaseReporter = require('./BaseReporter');
-const { formatSize } = require('./helpers');
 
 class Json extends BaseReporter {
   /**
@@ -9,52 +8,47 @@ class Json extends BaseReporter {
    */
   print(dependency) {
     if (dependency.isReal()) {
-      this.options.printer(JSON.stringify(this.draw(dependency)));
+      this.printJson(this.serializeDependency(dependency));
       return;
     }
 
-    dependency.children.forEach((dep) => {
-      this.options.printer(JSON.stringify(this.draw(dep)));
+    dependency.children.forEach((child) => {
+      this.printJson(this.serializeDependency(child));
     });
   }
 
   /**
-   * @param {Dependency} dependency
-   * @param {Object} deps
+   * @param {object} data
    * @private
    */
-  draw(dependency, deps = {}) {
+  printJson(data) {
+    this.options.printer(JSON.stringify(data, null, this.options.space));
+  }
+
+  /**
+   * @param {Dependency} dependency
+   * @return {object}
+   * @private
+   */
+  serializeDependency(dependency) {
     const stats = dependency.getStatsRecursive();
-    const dependencies = dependency.children;
     const label = dependency.getLabel();
+    const error = dependency.getError();
 
-    deps[dependency.toString()] = {
+    return {
+      package: dependency.toString(),
       deps: stats.dependencyCount,
-      size: formatSize(stats.unpackedSize),
       fileCount: stats.fileCount,
+      size: stats.unpackedSize,
+      duplicate: label === 'duplicate',
+      error: error.reason !== 'none' && error.message,
+      unmet: label === 'unmet',
+      ...dependency.getFields(),
+      ownStats: dependency.getStats(),
+      children: dependency.children.map(
+        (child) => this.serializeDependency(child),
+      ),
     };
-
-    if (label) {
-      if (label === 'duplicate') {
-        deps[dependency.toString()].duplicate = true;
-      } else if (label === 'unmet') {
-        deps[dependency.toString()].unmet = 'UNMET';
-      }
-    }
-
-    if (dependencies.length) {
-      dependencies.forEach((dep) => {
-        deps[dependency.toString()][dep.toString()] = {
-          deps: stats.dependencyCount,
-          size: formatSize(stats.unpackedSize),
-          fileCount: stats.fileCount,
-        };
-
-        this.draw(dep, deps[dependency.toString()]);
-      });
-    }
-
-    return deps;
   }
 }
 
