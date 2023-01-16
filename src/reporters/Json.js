@@ -12,9 +12,9 @@ class Json extends BaseReporter {
       return;
     }
 
-    dependency.children.forEach((child) => {
-      this.printJson(this.serializeDependency(child));
-    });
+    this.printJson(
+      dependency.children.map((c) => this.serializeDependency(c)),
+    );
   }
 
   /**
