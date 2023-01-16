@@ -3,6 +3,7 @@
 const Simple = require('./Simple');
 const Table = require('./Table');
 const Tree = require('./Tree');
+const Json = require('./Json');
 
 module.exports = {
   createReporter,
@@ -17,6 +18,7 @@ function createReporter(options = {}) {
   options = { printer: console.info, ...options };
 
   switch (options.name) {
+    case 'json': return new Json(options);
     case 'simple': return new Simple(options);
     case 'table': return new Table(options);
     default: return new Tree(options);
