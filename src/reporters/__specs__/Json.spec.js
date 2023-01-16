@@ -22,9 +22,9 @@ describe('reporters/Json', () => {
 
     expect(outputJson).toEqual({
       package: 'npm-package-arg@6.1.1',
-      deps: 7,
+      dependencyCount: 7,
       fileCount: 47,
-      size: 135406,
+      unpackedSize: 135406,
       duplicate: false,
       error: false,
       ownStats: {
@@ -41,9 +41,9 @@ describe('reporters/Json', () => {
       children: [
         {
           package: 'hosted-git-info@2.8.5',
-          deps: 0,
+          dependencyCount: 0,
           fileCount: 7,
-          size: 23278,
+          unpackedSize: 23278,
           duplicate: false,
           error: false,
           ownStats: {
@@ -61,9 +61,9 @@ describe('reporters/Json', () => {
         },
         {
           package: 'osenv@0.1.5',
-          deps: 2,
+          dependencyCount: 2,
           fileCount: 12,
-          size: 11097,
+          unpackedSize: 11097,
           duplicate: false,
           error: false,
           ownStats: {
@@ -80,9 +80,9 @@ describe('reporters/Json', () => {
           children: [
             {
               package: 'os-homedir@1.0.2',
-              deps: 0,
+              dependencyCount: 0,
               fileCount: 4,
-              size: 3152,
+              unpackedSize: 3152,
               duplicate: false,
               error: false,
               ownStats: {
@@ -101,9 +101,9 @@ describe('reporters/Json', () => {
             },
             {
               package: 'os-tmpdir@1.0.2',
-              deps: 0,
+              dependencyCount: 0,
               fileCount: 4,
-              size: 3056,
+              unpackedSize: 3056,
               duplicate: false,
               error: false,
               ownStats: {
@@ -124,9 +124,9 @@ describe('reporters/Json', () => {
         },
         {
           package: 'semver@5.7.1',
-          deps: 0,
+          dependencyCount: 0,
           fileCount: 7,
-          size: 61578,
+          unpackedSize: 61578,
           duplicate: false,
           error: false,
           ownStats: {
@@ -144,9 +144,9 @@ describe('reporters/Json', () => {
         },
         {
           package: 'validate-npm-package-name@3.0.0',
-          deps: 1,
+          dependencyCount: 1,
           fileCount: 16,
-          size: 23694,
+          unpackedSize: 23694,
           duplicate: false,
           error: false,
           ownStats: {
@@ -163,9 +163,9 @@ describe('reporters/Json', () => {
           children: [
             {
               package: 'builtins@1.0.3',
-              deps: 0,
+              dependencyCount: 0,
               fileCount: 7,
-              size: 2696,
+              unpackedSize: 2696,
               duplicate: false,
               error: false,
               ownStats: {

@@ -60,9 +60,9 @@ as a json:
 ```json
 {
   "package": "mkdirp@0.5.1",
-  "deps": 1,
+  "dependencyCount": 1,
   "fileCount": 37,
-  "size": 42486,
+  "unpackedSize": 42486,
   "duplicate": false,
   "error": false,
   "unmet": false,
@@ -79,9 +79,9 @@ as a json:
   "children": [
     {
       "package": "minimist@0.0.8",
-      "deps": 0,
+      "dependencyCount": 0,
       "fileCount": 14,
-      "size": 21274,
+      "unpackedSize": 21274,
       "duplicate": false,
       "error": false,
       "unmet": false,

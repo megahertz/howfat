@@ -37,9 +37,9 @@ class Json extends BaseReporter {
 
     return {
       package: dependency.toString(),
-      deps: stats.dependencyCount,
+      dependencyCount: stats.dependencyCount,
       fileCount: stats.fileCount,
-      size: stats.unpackedSize,
+      unpackedSize: stats.unpackedSize,
       duplicate: label === 'duplicate',
       error: error.reason !== 'none' && error.message,
       unmet: label === 'unmet',
