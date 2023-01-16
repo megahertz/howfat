@@ -15,8 +15,9 @@
   "typings": "src/index.d.ts",
   "repository": "megahertz/howfat",
   "files": [
-    "!**/__specs__",
-    "src/*"
+    "src/**/*.js",
+    "src/**/*.ts",
+    "!**/__specs__/*"
   ],
   "keywords": [
     "npm",
