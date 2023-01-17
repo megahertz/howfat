@@ -107,7 +107,7 @@ as a json:
   -d, --dev-dependencies BOOLEAN   Fetch dev dependencies, default false
   -p, --peer-dependencies BOOLEAN  Fetch peer dependencies, default false
   
-  -r, --reporter STRING            'default', 'table', 'tree'
+  -r, --reporter STRING            'json', 'simple', 'table', 'tree', default tree
       --fields STRING              Displayed fields separated by a comma:
                                    dependencies,size,files,license,
                                    author,description,maintainers,deprec,
