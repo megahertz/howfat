@@ -37,7 +37,7 @@ describe('reporters/Json', () => {
       deprecated: '',
       description: 'Parse the things that can be arguments to `npm install`',
       license: 'ISC',
-      maintainers: '[{email:ruyadorno@hotmail.com,name:ruyadorno},{email:mike@mikecorp.ca,name:mikemimik},{email:billatnpm@gmail.com,name:billatnpm},{email:anne@npmjs.com,name:annekimsey},{email:cghr1990@gmail.com,name:claudiahdz},{email:darcy@darcyclarke.me,name:darcyclarke},{email:evilpacket@gmail.com,name:adam_baldwin},{email:ahmad@ahmadnassri.com,name:ahmadnassri},{email:i@izs.me,name:isaacs}]',
+      maintainers: '[{email:evilpacket@gmail.com,name:adam_baldwin},{email:ahmad@ahmadnassri.com,name:ahmadnassri},{email:anne@npmjs.com,name:annekimsey},{email:billatnpm@gmail.com,name:billatnpm},{email:cghr1990@gmail.com,name:claudiahdz},{email:darcy@darcyclarke.me,name:darcyclarke},{email:i@izs.me,name:isaacs}]',
       children: [
         {
           package: 'hosted-git-info@2.8.5',
@@ -76,7 +76,7 @@ describe('reporters/Json', () => {
           deprecated: '',
           description: 'Look up environment settings specific to different operating systems',
           license: 'ISC',
-          maintainers: '[{email:ruyadorno@hotmail.com,name:ruyadorno},{email:mike@mikecorp.ca,name:mikemimik},{email:billatnpm@gmail.com,name:billatnpm},{email:anne@npmjs.com,name:annekimsey},{email:cghr1990@gmail.com,name:claudiahdz},{email:darcy@darcyclarke.me,name:darcyclarke},{email:evilpacket@gmail.com,name:adam_baldwin},{email:ahmad@ahmadnassri.com,name:ahmadnassri},{email:i@izs.me,name:isaacs}]',
+          maintainers: '[{email:me@re-becca.org,name:iarna},{email:i@izs.me,name:isaacs},{email:ogd@aoaioxxysz.net,name:othiym23},{email:rok@kowalski.gd,name:robertkowalski}]',
           children: [
             {
               package: 'os-homedir@1.0.2',
@@ -139,7 +139,7 @@ describe('reporters/Json', () => {
           deprecated: '',
           description: 'The semantic version parser used by npm.',
           license: 'ISC',
-          maintainers: '[{email:ruyadorno@hotmail.com,name:ruyadorno},{email:mike@mikecorp.ca,name:mikemimik},{email:billatnpm@gmail.com,name:billatnpm},{email:anne@npmjs.com,name:annekimsey},{email:cghr1990@gmail.com,name:claudiahdz},{email:darcy@darcyclarke.me,name:darcyclarke},{email:evilpacket@gmail.com,name:adam_baldwin},{email:ahmad@ahmadnassri.com,name:ahmadnassri},{email:i@izs.me,name:isaacs}]',
+          maintainers: '[{email:evilpacket@gmail.com,name:adam_baldwin},{email:ahmad@ahmadnassri.com,name:ahmadnassri},{email:anne@npmjs.com,name:annekimsey},{email:cghr1990@gmail.com,name:claudiahdz},{email:darcy@darcyclarke.me,name:darcyclarke},{email:i@izs.me,name:isaacs}]',
           children: [],
         },
         {
@@ -159,7 +159,7 @@ describe('reporters/Json', () => {
           deprecated: '',
           description: "Give me a string and I'll tell you if it's a valid npm package name",
           license: 'ISC',
-          maintainers: '[{email:ruyadorno@hotmail.com,name:ruyadorno},{email:mike@mikecorp.ca,name:mikemimik},{email:billatnpm@gmail.com,name:billatnpm},{email:anne@npmjs.com,name:annekimsey},{email:cghr1990@gmail.com,name:claudiahdz},{email:darcy@darcyclarke.me,name:darcyclarke},{email:evilpacket@gmail.com,name:adam_baldwin},{email:ahmad@ahmadnassri.com,name:ahmadnassri},{email:i@izs.me,name:isaacs}]',
+          maintainers: '[{name:chrisdickinson,email:chris@neversaw.us}]',
           children: [
             {
               package: 'builtins@1.0.3',
@@ -178,7 +178,7 @@ describe('reporters/Json', () => {
               deprecated: '',
               description: 'List of node.js builtin modules',
               license: 'MIT',
-              maintainers: '[{email:julian@juliangruber.com,name:juliangruber},{email:tools+npm@segment.com,name:segment-admin}]',
+              maintainers: '[{name:juliangruber,email:julian@juliangruber.com},{name:segment,email:tj@segment.io}]',
               children: [],
             },
           ],
