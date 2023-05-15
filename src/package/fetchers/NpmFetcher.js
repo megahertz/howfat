@@ -73,9 +73,10 @@ class NpmFetcher extends Fetcher {
     pkg.dependencies = this.extractDependencies(packageJson);
     pkg.stats = this.extractStats(packageJson);
     pkg.requirements = this.extractRequirements(packageJson);
+    pkg.packageJson = packageJson;
 
     for (const f of META_FIELDS) {
-      const value = JSON.stringify(packageFullMeta[f] || packageJson[f]);
+      const value = JSON.stringify(packageJson[f] || packageFullMeta[f]);
       pkg.fields[f] = (value || '').replace(/"/g, '');
     }
 

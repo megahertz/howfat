@@ -28,6 +28,8 @@ class Package {
     unpackedSize: -1,
   };
 
+  packageJson = {};
+
   requirements = {
     arch: undefined,
     node: undefined,

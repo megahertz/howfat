@@ -19,6 +19,12 @@ class DuplicateDependency extends RealDependency {
     return this.original ? this.original.getFields() : super.getFields();
   }
 
+  getPackageJson() {
+    return this.original
+      ? this.original.getPackageJson()
+      : super.getPackageJson();
+  }
+
   /**
    * @param {Dependency} dependency
    * @return {this}

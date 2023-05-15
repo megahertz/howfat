@@ -81,6 +81,10 @@ class RealDependency extends Dependency {
     };
   }
 
+  getPackageJson() {
+    return this.package?.packageJson || {};
+  }
+
   /**
    * @param {Package} pkg
    */
