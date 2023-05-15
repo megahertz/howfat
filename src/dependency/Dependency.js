@@ -51,6 +51,10 @@ class Dependency {
     return {};
   }
 
+  getPackageJson() {
+    return {};
+  }
+
   getOriginal() {
     return this;
   }

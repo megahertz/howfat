@@ -20,7 +20,7 @@ function getConfig() {
           --fields STRING              Displayed fields separated by a comma:
                                        dependencies,size,files,license,
                                        author,description,maintainers,deprec,
-                                       deprecated,node,os,platform
+                                       deprecated,native,node,os,platform
           --sort STRING                Sort field. Add minus sign for 
                                        desc order, like size-. Default to 'name'
           --space NUMBER               Use spaces in json output, default null
@@ -69,7 +69,7 @@ class Config {
      */
     this.reporterOptions = {
       name: opts.reporter || 'tree',
-      fields: opts.fields || 'dependencies,size,files,license,deprec',
+      fields: opts.fields || 'dependencies,size,files,native,license,deprec',
       shortSize: opts.humanReadable !== false,
       sort: opts.sort || 'name',
       space: opts.space || null,

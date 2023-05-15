@@ -104,6 +104,13 @@ function formatStats(dependency, options) {
           break;
         }
 
+        case 'native': {
+          if (isNativeDependency(dependency.getPackageJson())) {
+            results.push(colorRed('NATIVE', options.useColors));
+          }
+          break;
+        }
+
         case 'unpackedSize': {
           if (stats.unpackedSize > 0) {
             if (options.shortSize) {
@@ -147,4 +154,36 @@ function colorRed(text, useColors, endColor = COLORS.gray) {
   }
 
   return COLORS.red + text + endColor;
+}
+
+/**
+ * Return true if the package looks like a native dependency.
+ *
+ * Based on is-native-module and @electron/rebuild
+ *
+ * @param {object} packageJson
+ * @return {boolean}
+ */
+function isNativeDependency(packageJson) {
+  if (typeof packageJson !== 'object' || !packageJson) {
+    return false;
+  }
+
+  const { dependencies = {}, devDependencies = {} } = packageJson;
+
+  const checks = [
+    dependencies.bindings,
+    dependencies.nan,
+    dependencies['node-gyp-build'],
+    dependencies['node-pre-gyp'],
+    dependencies.prebuild,
+    dependencies['prebuild-install'],
+
+    devDependencies.prebuildify,
+
+    packageJson.binary,
+    packageJson.gypfile,
+  ];
+
+  return checks.some(Boolean);
 }
