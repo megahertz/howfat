@@ -133,7 +133,7 @@ function formatStats(dependency, options) {
   }
 
   const resultsString = results
-    .map((f) => f.toString().trim())
+    .map((f) => f?.toString().trim())
     .filter(Boolean)
     .join(', ');
 
